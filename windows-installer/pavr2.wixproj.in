@@ -1,0 +1,44 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProductVersion>@SOFTWARE_VERSION@</ProductVersion>
+    <ProjectGuid>15e2e35e-f56e-47da-9536-ded64d31f1ac</ProjectGuid>
+    <OutputName>pololu-usb-avr-programmer-v2-$(ProductVersion)</OutputName>
+    <DefineConstants>
+      ProductVersion=$(ProductVersion);
+      SourceDir=@CMAKE_SOURCE_DIR@;
+      BuildDir=@CMAKE_BINARY_DIR@;
+      BinStagingDir=@CMAKE_BINARY_DIR@/msi_dlls;
+      DocumentationUrl=@DOCUMENTATION_URL@;
+    </DefineConstants>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Package</OutputType>
+    <DefineSolutionProperties>false</DefineSolutionProperties>
+    <IncludeSearchPaths>@CMAKE_CURRENT_BINARY_DIR@</IncludeSearchPaths>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug;ProductVersion=$(ProductVersion)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="@CMAKE_CURRENT_SOURCE_DIR@/pavr2.wxs" />
+    <Compile Include="@CMAKE_CURRENT_SOURCE_DIR@/ui.wxs" />
+    <HarvestDirectory Include="@CMAKE_BINARY_DIR@/msi_dlls">
+      <DirectoryRefId>BinDir</DirectoryRefId>
+      <ComponentGroupName>DllFiles</ComponentGroupName>
+      <PreprocessorVariable>var.BinStagingDir</PreprocessorVariable>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+    </HarvestDirectory>
+    <EmbeddedResource Include="@CMAKE_CURRENT_SOURCE_DIR@/en-us.wxl" />
+    <WixExtension Include="WixUIExtension" />
+    <WixExtension Include="WixUtilExtension" />
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" />
+</Project>

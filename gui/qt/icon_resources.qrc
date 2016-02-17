@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/">
+        <file alias="pololu.ico">../../images/app.ico</file>
+    </qresource>
+</RCC>

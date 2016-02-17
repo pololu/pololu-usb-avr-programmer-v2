@@ -1,0 +1,153 @@
+; Copyright 2008-2012 Pololu Corporation
+
+; This driver file is not needed on Windows 10 and later because of the new
+; driver usbser.inf that comes with Windows.
+
+[Strings]
+DriverPackageDisplayName="Pololu USB-to-Serial Drivers"
+ManufacturerName="Pololu Corporation"
+ServiceName="USB RS-232 Emulation Driver"
+pgm03a.Bootloader.Name="Pololu pgm03a Bootloader"
+pgm03a.Programmer.Name="Pololu USB AVR Programmer Programming Port"
+pgm03a.TTL.Name="Pololu USB AVR Programmer TTL Serial Port"
+pgm04a.Programmer.Name="Pololu USB AVR Programmer v2 Programming Port"
+pgm04a.TTL.Name="Pololu USB AVR Programmer v2 TTL Serial Port"
+umc01a.Bootloader.Name="Pololu umc01a Bootloader"
+umc01a.Command.Name="Pololu Jrk 21v3 Command Port"
+umc01a.TTL.Name="Pololu Jrk 21v3 TTL Port"
+umc02a.Bootloader.Name="Pololu umc02a Bootloader"
+umc02a.Command.Name="Pololu Jrk 12v12 Command Port"
+umc02a.TTL.Name="Pololu Jrk 12v12 TTL Port"
+org06a.Bootloader.Name="Pololu org06a Bootloader"
+org06a.Programmer.Name="Pololu Orangutan SVP Programmer"
+org06a.SPI.Name="Pololu Orangutan SVP USB Communication Port"
+org06a.TTL.Name="Pololu Orangutan SVP TTL Serial Port"
+usc02a.Bootloader.Name="Pololu usc02a Bootloader"
+usc02a.Command.Name="Pololu Micro Maestro 6-Servo Controller Command Port"
+usc02a.TTL.Name="Pololu Micro Maestro 6-Servo Controller TTL Port"
+usc03a.Bootloader.Name="Pololu usc03a Bootloader"
+usc03a.Command.Name="Pololu Mini Maestro 12-Channel USB Servo Controller Command Port"
+usc03a.TTL.Name="Pololu Mini Maestro 12-Channel USB Servo Controller TTL Port"
+usc03b.Bootloader.Name="Pololu usc03b Bootloader"
+usc03b.Command.Name="Pololu Mini Maestro 18-Channel USB Servo Controller Command Port"
+usc03b.TTL.Name="Pololu Mini Maestro 18-Channel USB Servo Controller TTL Port"
+usc03c.Bootloader.Name="Pololu usc03c Bootloader"
+usc03c.Command.Name="Pololu Mini Maestro 24-Channel USB Servo Controller Command Port"
+usc03c.TTL.Name="Pololu Mini Maestro 24-Channel USB Servo Controller TTL Port"
+pgm03a.NC.Name="Pololu USB AVR Programmer"
+p98.Command.Name="Pololu Simple High-Power Motor Controller 18v15 Command Port"
+p9A.Command.Name="Pololu Simple High-Power Motor Controller 24v12 Command Port"
+p9C.Command.Name="Pololu Simple High-Power Motor Controller 18v25 Command Port"
+p9E.Command.Name="Pololu Simple High-Power Motor Controller 24v23 Command Port"
+pA1.Command.Name="Pololu Simple Motor Controller 18v7 Command Port"
+
+[DefaultInstall]
+CopyINF=pololu_usb_to_serial.inf
+
+[Version]
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Signature="$Windows NT$"
+Provider=%ManufacturerName%
+CatalogFile=pololu.cat
+DriverVer=12/23/2015,2.1.2.0
+DriverPackageDisplayName=%DriverPackageDisplayName%
+
+[Manufacturer]
+%ManufacturerName%=DeviceList, NTamd64
+
+[DestinationDirs]
+FakeModemCopyFileSection=12
+DefaultDestDir=12
+
+[DeviceList]
+%pgm03a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0080
+%pgm03a.Programmer.Name%=DriverInstall, USB\VID_1FFB&PID_0081&MI_00
+%pgm03a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0081&MI_02
+%pgm04a.Programmer.Name%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_01
+%pgm04a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_03
+%umc01a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0082
+%umc01a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0083&MI_00
+%umc01a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0083&MI_02
+%umc02a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0084
+%umc02a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0085&MI_00
+%umc02a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0085&MI_02
+%org06a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0086
+%org06a.Programmer.Name%=DriverInstall, USB\VID_1FFB&PID_0087&MI_00
+%org06a.SPI.Name%=DriverInstall, USB\VID_1FFB&PID_0087&MI_02
+%org06a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0087&MI_04
+%usc02a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0088
+%usc02a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0089&MI_00
+%usc02a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0089&MI_02
+%usc03a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_008d
+%usc03a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_008a&MI_00
+%usc03a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_008a&MI_02
+%usc03b.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_008e
+%usc03b.Command.Name%=DriverInstall, USB\VID_1FFB&PID_008b&MI_00
+%usc03b.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_008b&MI_02
+%usc03c.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_008f
+%usc03c.Command.Name%=DriverInstall, USB\VID_1FFB&PID_008c&MI_00
+%usc03c.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_008c&MI_02
+%pgm03a.NC.Name%=DriverInstall, USB\VID_1FFB&PID_0090
+%p98.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0098&MI_00
+%p9A.Command.Name%=DriverInstall, USB\VID_1FFB&PID_009A&MI_00
+%p9C.Command.Name%=DriverInstall, USB\VID_1FFB&PID_009C&MI_00
+%p9E.Command.Name%=DriverInstall, USB\VID_1FFB&PID_009E&MI_00
+%pA1.Command.Name%=DriverInstall, USB\VID_1FFB&PID_00A1&MI_00
+
+[DeviceList.NTamd64]
+%pgm03a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0080
+%pgm03a.Programmer.Name%=DriverInstall, USB\VID_1FFB&PID_0081&MI_00
+%pgm03a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0081&MI_02
+%pgm04a.Programmer.Name%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_01
+%pgm04a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_03
+%umc01a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0082
+%umc01a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0083&MI_00
+%umc01a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0083&MI_02
+%umc02a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0084
+%umc02a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0085&MI_00
+%umc02a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0085&MI_02
+%org06a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0086
+%org06a.Programmer.Name%=DriverInstall, USB\VID_1FFB&PID_0087&MI_00
+%org06a.SPI.Name%=DriverInstall, USB\VID_1FFB&PID_0087&MI_02
+%org06a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0087&MI_04
+%usc02a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_0088
+%usc02a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0089&MI_00
+%usc02a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_0089&MI_02
+%usc03a.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_008d
+%usc03a.Command.Name%=DriverInstall, USB\VID_1FFB&PID_008a&MI_00
+%usc03a.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_008a&MI_02
+%usc03b.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_008e
+%usc03b.Command.Name%=DriverInstall, USB\VID_1FFB&PID_008b&MI_00
+%usc03b.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_008b&MI_02
+%usc03c.Bootloader.Name%=DriverInstall, USB\VID_1FFB&PID_008f
+%usc03c.Command.Name%=DriverInstall, USB\VID_1FFB&PID_008c&MI_00
+%usc03c.TTL.Name%=DriverInstall, USB\VID_1FFB&PID_008c&MI_02
+%pgm03a.NC.Name%=DriverInstall, USB\VID_1FFB&PID_0090
+%p98.Command.Name%=DriverInstall, USB\VID_1FFB&PID_0098&MI_00
+%p9A.Command.Name%=DriverInstall, USB\VID_1FFB&PID_009A&MI_00
+%p9C.Command.Name%=DriverInstall, USB\VID_1FFB&PID_009C&MI_00
+%p9E.Command.Name%=DriverInstall, USB\VID_1FFB&PID_009E&MI_00
+%pA1.Command.Name%=DriverInstall, USB\VID_1FFB&PID_00A1&MI_00
+
+[DriverInstall]
+include=mdmcpq.inf,usb.inf
+CopyFiles = FakeModemCopyFileSection
+AddReg=DriverAddReg
+
+[DriverAddReg]
+HKR,,DevLoader,,*ntkern 
+HKR,,NTMPDriver,,usbser.sys 
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[DriverInstall.Services]
+include=mdmcpq.inf
+AddService=usbser, 0x00000002, DriverService
+
+[DriverService]
+DisplayName=%ServiceName%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\usbser.sys
+LoadOrderGroup=Base

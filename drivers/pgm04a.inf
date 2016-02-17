@@ -1,0 +1,56 @@
+; Copyright (C) 2015 Pololu Corporation
+
+; This driver file is not needed on Windows 8.1 and later because each device
+; implements Microsoft OS 2.0 Descriptors.
+
+[Strings]
+DriverPackageDisplayName="Pololu USB AVR Programmer v2"
+ManufacturerName="Pololu Corporation"
+ClassName="Universal Serial Bus devices"
+DeviceInterfaceGUID="{7bcb89b1-f483-4852-87c3-9848c3c05be5}"
+p00B0="Pololu USB AVR Programmer v2"
+
+[DefaultInstall]
+CopyINF=pgm04a.inf
+
+[Version]
+DriverVer=12/23/2015,1.0.1
+Signature=$Windows NT$
+Class=USBDevice
+ClassGuid={88BAE032-5A81-49F0-BC3D-A4FF138216D6}
+Provider=%ManufacturerName%
+CatalogFile=pololu.cat
+DriverPackageDisplayName=%DriverPackageDisplayName%
+
+[Manufacturer]
+%ManufacturerName%=Models,NTamd64
+
+[ClassInstall32]
+AddReg=ClassInstall_AddReg
+
+[ClassInstall_AddReg]
+HKR,,,0,%ClassName%
+HKR,,IconPath,%REG_MULTI_SZ%,"%systemroot%\system32\setupapi.dll,-20"
+HKR,,NoInstallClass,,1
+HKR,,BootCritical,,0
+HKR,,Configurable,,1
+
+[Models]
+%p00B0%=USB_Install, USB\VID_1FFB&PID_00B0&MI_00
+
+[Models.NTamd64]
+%p00B0%=USB_Install, USB\VID_1FFB&PID_00B0&MI_00
+
+[USB_Install]
+Include = Winusb.inf
+Needs = WINUSB.NT
+
+[USB_Install.Services]
+Include = Winusb.inf
+Needs = WINUSB.NT.Services
+
+[USB_Install.HW]
+AddReg = Dev_AddReg
+
+[Dev_AddReg]
+HKR,,DeviceInterfaceGUIDs,0x00010000,%DeviceInterfaceGUID%
