@@ -65,4 +65,4 @@ cp "pavr2gui.exe" "$EXEDIR"
 
 cp windows-installer/bin/Release/en-us/*.msi .
 
-"$SIGNTOOL" sign -n "Pololu Corporation" $SIGNFLAGS -d "Pololu USB AVR Programmer v2 Installer" *.msi
+"$SIGNTOOL" sign -n "Pololu Corporation" $SIGNFLAGS -d "Pololu USB AVR Programmer v2 Setup" *.msi
