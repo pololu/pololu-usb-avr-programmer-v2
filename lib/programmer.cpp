@@ -170,7 +170,7 @@ std::string Programmer::convertProgrammingErrorToLongString(uint8_t programmingE
         return "";
 
     case PGM04A_PROGRAMMING_ERROR_TARGET_POWER_BAD:
-        return "Target VCC either went too low or had too much range, "
+        return "Target VCC went outside of the allowed range, "
             "so programming was aborted.  "
             "Make sure that the target is powered on and its batteries "
             "are not too low (if applicable).";
