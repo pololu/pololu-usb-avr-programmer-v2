@@ -168,6 +168,7 @@ void MainView::handleSettingsChanged()
     window.setMaxIspFrequency(Programmer::getMaxFrequencyName(
             model->settings.ispFastestPeriod));
     window.setRegulatorMode(model->settings.regulatorMode);
+    window.setVccOutputEnabled(model->settings.vccOutputEnabled);
     window.setVccOutputIndicator(model->settings.vccOutputIndicator);
     window.setLineAFunction(model->settings.lineAFunction);
     window.setLineBFunction(model->settings.lineBFunction);
