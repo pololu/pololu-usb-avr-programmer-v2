@@ -98,7 +98,8 @@
       </Directory>
     </Directory>
 
-    <Binary Id="libusbpDLL" SourceFile="$(var.BinStagingDir)\libusbp-1.dll" />
+    <Binary Id="InstallHelper"
+            SourceFile="$(var.BuildDir)/msi_helpers/libusbp-install-helper-1.dll" />
 
     <Feature Id="Software"
              Title="Pololu USB AVR Programmer v2 Software"
@@ -120,12 +121,12 @@
     </Feature>
 
     <CustomAction Id="InstallInf1" Impersonate="no" Execute="deferred" Return="check"
-                  BinaryKey="libusbpDLL" DllEntry="libusbp_install_inf" />
+                  BinaryKey="InstallHelper" DllEntry="libusbp_install_inf" />
     <CustomAction Id="InstallInf1.SetProperty"
                   Property="InstallInf1" Value="[INSTALLDIR]drivers\pgm04a.inf" />
 
     <CustomAction Id="InstallInf2" Impersonate="no" Execute="deferred" Return="check"
-                  BinaryKey="libusbpDLL" DllEntry="libusbp_install_inf" />
+                  BinaryKey="InstallHelper" DllEntry="libusbp_install_inf" />
     <CustomAction Id="InstallInf2.SetProperty"
                   Property="InstallInf2" Value="[INSTALLDIR]drivers\pololu_usb_to_serial.inf" />
 

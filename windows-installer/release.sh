@@ -13,6 +13,7 @@
 
 MSBUILD="/c/Program Files (x86)/MSBuild/14.0/Bin/MSBuild.exe"
 SIGNTOOL="/c/Program Files (x86)/Windows Kits/10/bin/x64/signtool.exe"
+HELPERDIR="msi_helpers"
 DLLDIR="msi_dlls"
 EXEDIR="msi_exes"
 SIGNFLAGS="-fd sha256 -tr http://timestamp.globalsign.com/?signature=sha2 -td sha256"
@@ -27,8 +28,11 @@ fi
 
 set -ue
 
-rm -rf "$DLLDIR" "$EXEDIR"
-mkdir -p "$DLLDIR/platforms" "$EXEDIR"
+rm -rf "$HELPERDIR" "$DLLDIR" "$EXEDIR"
+mkdir -p "$HELPERDIR" "$DLLDIR/platforms" "$EXEDIR"
+
+# Helps us call SetupOEMCopyInf to install the INF files.
+cp "$MINGW_PREFIX/bin/libusbp-install-helper-1.dll" "$HELPERDIR"
 
 # These are the files you need for the CLI.
 cp "$MINGW_PREFIX/bin/libwinpthread-1.dll" "$DLLDIR" # MIT license + custom
