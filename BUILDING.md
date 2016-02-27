@@ -63,9 +63,9 @@ by running `pavr2gui`.
 
 If you get an error about libusbp failing to load (for example,
 "cannot open shared object file: No such file or directory"), then
-it is likely that your system does not search for libraries in `/usr/local/lib`
-by default, so it cannot find libusbp.  To fix this issue for your current
-shell session, run:
+run `sudo ldconfig` and try again.  If that does not work, it is likely that
+your system does not search for libraries in `/usr/local/lib`
+by default.  To fix this issue for your current shell session, run:
 
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
