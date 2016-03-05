@@ -5,9 +5,9 @@ Release date: 2016 Mar 02<br/>
 [www.pololu.com](https://www.pololu.com/)
 
 This repository contains the source code of the configuration software that
-supports the Pololu USB AVR Programmer v2.  There are two programs: the Pololu
-USB AVR Programmer v2 Command-line Utility (pavr2cmd) and the Pololu USB AVR
-Programmer v2 Configuration Utility (pavr2gui).
+supports the [Pololu USB AVR Programmer v2](https://www.pololu.com/product/3170).
+There are two programs: the Pololu USB AVR Programmer v2 Command-line Utility
+(pavr2cmd) and the Pololu USB AVR Programmer v2 Configuration Utility (pavr2gui).
 
 These programs have basically the same set of features.  The main difference is
 that pavr2cmd is a command-line utility suitable for being used in scripts or
