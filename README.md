@@ -38,4 +38,9 @@ Linux users can download the source code and compile it.  See
 
 ## Version history
 
+* 1.0.1 (2016 Mar 20):
+    * Fixed the Windows installer so that it sends the appropriate message to
+      notify other applications that the PATH has changed.
+    * Changed the Windows installer "repair" option so that it reinstalls
+      the driver files when it is run.
 * 1.0.0 (2016 Mar 02): Original release.

@@ -120,6 +120,10 @@
       <ComponentRef Id="PololuCat" />
     </Feature>
 
+    <CustomAction Id="BroadcastSettingChange" BinaryKey="InstallHelper"
+                  DllEntry="libusbp_broadcast_setting_change"
+                  Impersonate="yes" Execute="deferred" Return="check" />
+
     <CustomAction Id="InstallInf1" Impersonate="no" Execute="deferred" Return="check"
                   BinaryKey="InstallHelper" DllEntry="libusbp_install_inf" />
     <CustomAction Id="InstallInf1.SetProperty"
@@ -131,10 +135,11 @@
                   Property="InstallInf2" Value="[INSTALLDIR]drivers\pololu_usb_to_serial.inf" />
 
     <InstallExecuteSequence>
-      <Custom Action="InstallInf1.SetProperty" After="InstallFiles">NOT Installed</Custom>
-      <Custom Action="InstallInf1" After="InstallInf1.SetProperty">NOT Installed</Custom>
-      <Custom Action="InstallInf2.SetProperty" After="InstallFiles">NOT Installed</Custom>
-      <Custom Action="InstallInf2" After="InstallInf2.SetProperty">NOT Installed</Custom>
+      <Custom Action="InstallInf1.SetProperty" After="InstallFiles" />
+      <Custom Action="InstallInf1" After="InstallInf1.SetProperty">(NOT Installed) OR REINSTALLMODE</Custom>
+      <Custom Action="InstallInf2.SetProperty" After="InstallFiles" />
+      <Custom Action="InstallInf2" After="InstallInf2.SetProperty">(NOT Installed) OR REINSTALLMODE</Custom>
+      <Custom Action="BroadcastSettingChange" Before="InstallFinalize" />
     </InstallExecuteSequence>
 
     <WixVariable Id="WixUIBannerBmp"
