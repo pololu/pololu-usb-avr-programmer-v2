@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProductVersion>@SOFTWARE_VERSION@</ProductVersion>
     <ProjectGuid>15e2e35e-f56e-47da-9536-ded64d31f1ac</ProjectGuid>
-    <OutputName>pololu-usb-avr-programmer-v2-$(ProductVersion)</OutputName>
+    <OutputName>pololu-usb-avr-programmer-v2-$(ProductVersion)-win</OutputName>
     <DefineConstants>
       ProductVersion=$(ProductVersion);
       SourceDir=@CMAKE_SOURCE_DIR@;

@@ -19,7 +19,7 @@ RESDIR="mac_resources"
 APPDIR="$STAGINGDIR/Pololu USB AVR Programmer v2.app"
 PATHDIR="path"
 SRCDIR=`dirname $0`/..
-PKG="pololu-usb-avr-programmer-v2-$VERSION.pkg"
+PKG="pololu-usb-avr-programmer-v2-$VERSION-mac.pkg"
 
 PATH=$PATH:`dirname $0`  # so we can run other scripts in the same directory
 
