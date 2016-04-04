@@ -49,6 +49,7 @@ cp "$MINGW_PREFIX/bin/libharfbuzz-0.dll" "$DLLDIR"  # "Old MIT"
 cp "$MINGW_PREFIX/bin/libiconv-2.dll" "$DLLDIR"     # GPLv3
 cp "$MINGW_PREFIX/bin/libintl-8.dll" "$DLLDIR"      # GPLv3
 cp "$MINGW_PREFIX/bin/libpcre16-0.dll" "$DLLDIR"    # BSD
+cp "$MINGW_PREFIX/bin/libpcre-1.dll" "$DLLDIR"      # BSD
 cp "$MINGW_PREFIX/bin/libpng16-16.dll" "$DLLDIR"    # custom
 cp "$MINGW_PREFIX/bin/Qt5Core.dll" "$DLLDIR"        # LGPLv3
 cp "$MINGW_PREFIX/bin/Qt5Gui.dll" "$DLLDIR"

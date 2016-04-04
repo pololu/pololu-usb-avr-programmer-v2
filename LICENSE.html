@@ -85,37 +85,13 @@
 
 <p>
   In order to reduce the size of this software's bundled dependencies, the Qt
-  framework verison 5.5.1 was built from commit
-  <a href="https://github.com/Alexpux/MINGW-packages/commit/f7cb02ebfb164ee42d0044c2e9074ad80129e50d">f7cb02e</a>
-  of the MINGW-packages repository.  The modifications made in the following
-  patch were applied and then the package was built from the MSYS2 development
-  environment by running <code>MINGW_INSTALLS=mingw32 makepkg-mingw -s</code>.
+  framework verison 5.6.0 using the scripts in the mingw-w64-qt5 directory in commit
+  <a href="https://github.com/Alexpux/MINGW-packages/commit/2f1b0b9719368a6c9dcfcc4cb9192edb5475d406">2f1b0b9</a>
+  of the MINGW-packages repository.  The _use_icu variable was changed from "yes" to "no"
+  and then the package was built from the MSYS2 development environment by
+  running <code>MINGW_INSTALLS=mingw32 makepkg-mingw -s</code>.
 </p>
 
-<pre>
-diff --git a/mingw-w64-qt5/PKGBUILD b/mingw-w64-qt5/PKGBUILD
-index 1e102cf..ecc35be 100644
---- a/mingw-w64-qt5/PKGBUILD
-+++ b/mingw-w64-qt5/PKGBUILD
-@@ -37,7 +37,7 @@ else
-   _freetype2="-system-freetype"
-   _fastbuild="no"
-   _ltcg="no"
--  _use_icu=yes
-+  _use_icu=no
- fi
-
- # Thiago's patch doesn't contain the configure script changes
-@@ -82,8 +82,8 @@ else
- fi
-
- #_opengl=angle
--#_opengl=desktop
--_opengl=dynamic
-+_opengl=desktop
-+#_opengl=dynamic
- _opengl_for_configure="${_opengl}"
-</pre>
 
 <h2>Build information for the Mac OS X installer</h2>
 
