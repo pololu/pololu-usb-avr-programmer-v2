@@ -38,6 +38,8 @@ Linux users can download the source code and compile it.  See
 
 ## Version history
 
+* 1.0.2 (2016 May 05): Fixed a problem with the Mac OS X release that prevented
+  it from finding libusbp at run-time.
 * 1.0.1 (2016 Mar 20):
     * Fixed the Windows installer so that it sends the appropriate message to
       notify other applications that the PATH has changed.

@@ -40,8 +40,6 @@ if ARGV.size != 1
   exit 1
 end
 
-failure = false
-
 exe_filename = ARGV[0]
 exe_dirname = File.dirname(exe_filename)
 get_lib_paths(exe_filename).each do |lib_path|
@@ -52,18 +50,15 @@ get_lib_paths(exe_filename).each do |lib_path|
     # This is a system library that we don't need to worry about.
   when lib_path.start_with?("@rpath/")
     # This library uses @rpath.  It is probably in /usr/local/lib.
-    # Just copy the library.
+    # Copy the library and fix the reference to it.
     copy_lib "/usr/local/lib/#{basename}", exe_dirname
+    fix_ref(exe_filename, lib_path, "@executable_path/#{basename}")
   when lib_path.start_with?("@executable_path/")
     # This library is probably in the right place already.
     # If not, we'll catch the problem when we test the executable.
   else
     # Copy the library and fix the reference to it.
     copy_lib lib_path, exe_dirname
-    fix_ref(exe_filename, lib_path, "@rpath/#{basename}")
+    fix_ref(exe_filename, lib_path, "@executable_path/#{basename}")
   end
 end
-
-
-
-exit 2 if failure
