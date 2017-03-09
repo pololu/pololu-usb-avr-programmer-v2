@@ -7,10 +7,8 @@ class MainController;
 
 /** The MainView class knows a lot about what we want to display on the screen
  * and when it needs to be updated, but it knows nothing about the underlying
- * GUI framework, so that it can hopefully be reused if we port to different GUI
- * framework.
- *
- * The GUI framework may send spurious message to the v
+ * GUI framework, so that it can hopefully be reused if we port to a different
+ * GUI framework.
  *
  * It uses classes like MainWindow which know about the GUI framework. */
 class MainView
@@ -20,7 +18,7 @@ public:
 
     /** This is a shortcut that allows MainWindow to report user input
     events directly to the controller.  The MainView class normally doesn't need
-    to process any of those events, and it is annoying to have a function
+    to process any of those events, and it is annoying to have a ton of
     one-line functions that just forward all their arguments to the controller. */
     MainController * userInputReceiver() { return controller; }
 
