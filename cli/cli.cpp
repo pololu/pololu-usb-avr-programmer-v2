@@ -70,8 +70,8 @@ static const char help[] =
 
 // Note: The arguments that are entered as a number by the user are all
 // uint32_t.  If we made them be their proper types, that would mean adding more
-// information to the CLI code that code instead be in the library, and it means
-// a typical user would see a wider variety of error messages.
+// information to the CLI code that could instead be in the library, and it
+// means a typical user would see a wider variety of error messages.
 // [all-settings]
 struct Arguments
 {
@@ -613,7 +613,7 @@ static void printProgrammerStatus(ProgrammerSelector & selector)
     ProgrammerVariables variables = handle.getVariables();
 
     // The output here is compatible with YAML so that people can more easily
-    // write scripts the use it.
+    // write scripts that use it.
 
     int leftColumnWidth = 41;
     auto leftColumn = std::setw(leftColumnWidth);

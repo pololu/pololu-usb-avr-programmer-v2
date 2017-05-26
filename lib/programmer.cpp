@@ -12,7 +12,7 @@
 // A setup packet bRequest value from USB 2.0 Table 9-4
 #define USB_REQUEST_GET_DESCRIPTOR 6
 
-// A descriptor types from USB 2.0 Table 9-5
+// A descriptor type from USB 2.0 Table 9-5
 #define USB_DESCRIPTOR_TYPE_STRING 3
 
 // pgm04a uses voltage units of 32 mV, so the maximum representable voltage
