@@ -103,7 +103,7 @@ library into your MSYS2 environment.
     wget https://github.com/pololu/libusbp/archive/v1-latest.tar.gz
     tar -xzf v1-latest.tar.gz
     cd libusbp-v1-latest
-    MSYS2_ARG_CONV_EXCL= cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
+    MSYS2_ARG_CONV_EXCL=- cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
     make install DESTDIR=/
 
 You can test to see if libusbp-1 was installed correctly by running
