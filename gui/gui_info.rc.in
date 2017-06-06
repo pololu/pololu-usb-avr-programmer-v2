@@ -22,7 +22,7 @@ BEGIN
             VALUE "CompanyName", "Pololu Corporation"
             VALUE "FileDescription", "Pololu USB AVR Programmer v2 Configuration Utility"
             VALUE "FileVersion", VERSION_STR
-            VALUE "ProductName", "Pololu USB AVR Programmer v2 Configuration Utility ${CMAKE_BUILD_TYPE})"
+            VALUE "ProductName", "Pololu USB AVR Programmer v2 Configuration Utility (${CMAKE_BUILD_TYPE})"
             VALUE "ProductVersion", VERSION_STR
             VALUE "LegalCopyright", "Copyright (C) ${YEAR} Pololu Corporation"
         END
