@@ -569,7 +569,7 @@ void MainWindow::on_stk500SoftwareVersionMajorValue_valueChanged(int value)
     on_stk500HardwareVersionValue_valueChanged(0);
 }
 
-// On Mac OS X, field labels are usually right-aligned and do not have colons.
+// On Mac OS X, field labels are usually right-aligned.
 #ifdef __APPLE__
 #define FIELD_LABEL_SUFFIX ":"
 #define FIELD_LABEL_ALIGNMENT Qt::AlignRight
