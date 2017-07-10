@@ -171,3 +171,41 @@ Run these commands to build this software and install it:
 You should now be able to run the command-line utility by running `pavr2cmd` in
 your shell, and you should be able to start the graphical configuration utility
 by running `pavr2gui`.
+
+
+## Building from source on Linux for Windows with Nixcrpkgs
+
+The Windows version of this software can also be cross-compiled on a Linux
+machine using [Nixcrpkgs](https://github.com/pololu/nixcrpkgs), a collection of tools for
+cross-compiling.  One advantage of compiling the software this way is that you get standalone executables that do not depend on any shared libraries except those that come with the operating system.
+
+To get started, you should first install [Nix, the purely functional
+package manager](http://nixos.org/nix/), on a Linux machine by following the
+instructions on the Nix website.
+
+Next, download the latest version of
+[Nixcrpkgs](https://github.com/pololu/nixcrpkgs), a collection of tools for
+cross-compiling, and add nixcrpkgs to your `NIX_PATH` environment variable.  In
+these instructions, we will download it to your home directory, but you could
+put it somewhere else if you want.
+
+    cd ~
+    wget https://github.com/pololu/nixcrpkgs/archive/master.tar.gz
+    tar -xf master.tar.gz
+    mv nixcrpkgs-master nixcrpkgs
+    export NIX_PATH=$NIX_PATH:nixcrpkgs=$(pwd)/nixcrpkgs
+
+Now run these commands to download this software and build it:
+
+    wget https://github.com/pololu/pololu-usb-avr-programmer-v2/archive/master.tar.gz
+    tar -xzf master.tar.gz
+    cd pololu-usb-avr-programmer-v2-master
+    nix-build -A win32
+
+At this point, `nix-build` will start running the build procedure defined in
+`default.nix`.  The first time you run this command, it will take a while to
+complete because `nix-build` has to build the cross-compilers and libraries
+defined in Nixcrpkgs that are needed for this software.
+
+Once the build is completed, there should be a symbolic link in the current
+directory named `result` that points to the compiled software.
