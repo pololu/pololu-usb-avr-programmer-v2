@@ -16,6 +16,9 @@ set (SOFTWARE_VERSION_MINOR 0)
 set (SOFTWARE_VERSION_PATCH 2)
 set (SOFTWARE_VERSION ${SOFTWARE_VERSION_MAJOR}.${SOFTWARE_VERSION_MINOR}.${SOFTWARE_VERSION_PATCH})
 
+# Don't use -rdynamic since it causes musl static linking to not work.
+cmake_policy(SET CMP0065 NEW)
+
 string(TIMESTAMP YEAR "%Y")
 
 find_package(PkgConfig)
