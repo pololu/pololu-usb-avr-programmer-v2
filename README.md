@@ -9,11 +9,6 @@ supports the [Pololu USB AVR Programmer v2](https://www.pololu.com/product/3170)
 There are two programs: the Pololu USB AVR Programmer v2 Command-line Utility
 (pavr2cmd) and the Pololu USB AVR Programmer v2 Configuration Utility (pavr2gui).
 
-These programs have basically the same set of features.  The main difference is
-that pavr2cmd is a command-line utility suitable for being used in scripts or
-from a text-based terminal, while pavr2gui provides a user-friendly graphical
-user interface.
-
 This software only supports the Pololu USB AVR Programmer *v2*, which is
 *blue-colored* and labeled *pgm04a*.  If you have an older Pololu programmer,
 refer to the product page and user's guide of that programmer for software
