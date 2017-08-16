@@ -103,7 +103,7 @@ library into your MSYS2 environment.
     wget https://github.com/pololu/libusbp/archive/v1-latest.tar.gz
     tar -xzf v1-latest.tar.gz
     cd libusbp-v1-latest
-    MSYS2_ARG_CONV_EXCL=- cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
+    MSYS2_ARG_CONV_EXCL=- cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=$MINGW_PREFIX
     make install DESTDIR=/
 
 You can test to see if libusbp-1 was installed correctly by running
@@ -118,7 +118,7 @@ Run these commands to build this software and install it:
     wget https://github.com/pololu/pololu-usb-avr-programmer-v2/archive/master.tar.gz
     tar -xzf master.tar.gz
     cd pololu-usb-avr-programmer-v2-master
-    MSYS2_ARG_CONV_EXCL= cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
+    MSYS2_ARG_CONV_EXCL=- cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=$MINGW_PREFIX
     make install DESTDIR=/
 
 You should now be able to run the command-line utility by running `pavr2cmd` in
