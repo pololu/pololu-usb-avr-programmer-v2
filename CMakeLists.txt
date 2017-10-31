@@ -1,4 +1,16 @@
 cmake_minimum_required (VERSION 2.8.11)
+
+# Don't use -rdynamic since it breaks causes musl static linking.
+cmake_policy(SET CMP0065 NEW)
+
+# Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
+cmake_policy(SET CMP0025 NEW)
+
+# Fix a warning on Mac OS X.
+if (NOT CMAKE_VERSION VERSION_LESS "3.0")
+  cmake_policy(SET CMP0042 NEW)
+endif ()
+
 project (pavrpgm)
 
 set(POLOLU_BUILD FALSE CACHE BOOL
@@ -15,9 +27,6 @@ set (SOFTWARE_VERSION_MAJOR 1)
 set (SOFTWARE_VERSION_MINOR 0)
 set (SOFTWARE_VERSION_PATCH 2)
 set (SOFTWARE_VERSION ${SOFTWARE_VERSION_MAJOR}.${SOFTWARE_VERSION_MINOR}.${SOFTWARE_VERSION_PATCH})
-
-# Don't use -rdynamic since it causes musl static linking to not work.
-cmake_policy(SET CMP0065 NEW)
 
 string(TIMESTAMP YEAR "%Y")
 
@@ -62,11 +71,6 @@ endif ()
 # Detect Linux.
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set (LINUX 1)
-endif ()
-
-# Fix a warning on Mac OS X.
-if (NOT CMAKE_VERSION VERSION_LESS "3.0")
-  cmake_policy(SET CMP0042 NEW)
 endif ()
 
 # Find libusbp and use it.
