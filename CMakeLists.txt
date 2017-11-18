@@ -80,6 +80,7 @@ endif ()
 # Find libusbp and use it.
 pkg_check_modules(LIBUSBP REQUIRED libusbp-1)
 string (REPLACE ";" " " LIBUSBP_CFLAGS "${LIBUSBP_CFLAGS}")
+string (REPLACE ";" " " LIBUSBP_LDFLAGS "${LIBUSBP_LDFLAGS}")
 set (CMAKE_CXX_FLAGS "${LIBUSBP_CFLAGS} ${CMAKE_CXX_FLAGS}")
 
 include_directories (
