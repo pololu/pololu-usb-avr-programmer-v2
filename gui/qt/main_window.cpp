@@ -766,12 +766,12 @@ QWidget * MainWindow::setupDeviceInfoBox()
         &ttlPortLabel, &ttlPortValue);
 
     // Make the right column wide enough to display the name of the programmer,
-    // which should be the wides thing that needs to fit in that column.
+    // which should be the widest thing that needs to fit in that column.
     // This is important for making sure that the sizeHint of the overall main
     // window has a good width before we set the window to be a fixed size.
     {
         QLabel tmpLabel;
-        tmpLabel.setText("Pololu USB AVR Programmer v99");
+        tmpLabel.setText("Pololu USB AVR Programmer v99.9");
         layout->setColumnMinimumWidth(1, tmpLabel.sizeHint().width());
     }
 

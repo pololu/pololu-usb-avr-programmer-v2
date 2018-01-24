@@ -5,10 +5,6 @@
 #include <programmer.h>
 #include <pavrpgm_config.h>
 
-#define USB_VENDOR_ID_POLOLU 0x1FFB
-#define USB_PRODUCT_ID_PGM04A 0x00B0
-#define USB_PRODUCT_ID_PGM03A 0x0081  // older programmer that is not supported
-
 // A setup packet bRequest value from USB 2.0 Table 9-4
 #define USB_REQUEST_GET_DESCRIPTOR 6
 
@@ -270,8 +266,10 @@ ProgrammerInstance::ProgrammerInstance()
 ProgrammerInstance::ProgrammerInstance(
     libusbp::device usbDevice,
     libusbp::generic_interface usbInterface,
-    std::string serialNumber, uint16_t firmwareVersion)
-    : usbDevice(usbDevice), usbInterface(usbInterface),
+    uint16_t productId,
+    std::string serialNumber,
+    uint16_t firmwareVersion)
+    : usbDevice(usbDevice), usbInterface(usbInterface), productId(productId),
       serialNumber(serialNumber), firmwareVersion(firmwareVersion)
 {
 }
@@ -281,9 +279,21 @@ ProgrammerInstance::operator bool() const
     return usbInterface;
 }
 
-std::string ProgrammerInstance::getName()
+std::string ProgrammerInstance::getName() const
 {
-    return "Pololu USB AVR Programmer v2";
+    if (productId == PAVR2_USB_PRODUCT_ID_V2)
+    {
+        return "Pololu USB AVR Programmer v2";
+    }
+    else if (productId == PAVR2_USB_PRODUCT_ID_V2_1)
+    {
+        return "Pololu USB AVR Programmer v2.1";
+    }
+    else
+    {
+        // Should not happen.
+        return "Pololu USB AVR Programmer v2.x?";
+    }
 }
 
 std::string ProgrammerInstance::getOsId() const
@@ -365,8 +375,14 @@ std::vector<ProgrammerInstance> programmerGetList()
     std::vector<ProgrammerInstance> list;
     for (const libusbp::device & device : libusbp::list_connected_devices())
     {
-        bool isProgrammer = device.get_vendor_id() == USB_VENDOR_ID_POLOLU &&
-            device.get_product_id() == USB_PRODUCT_ID_PGM04A;
+        if (device.get_vendor_id() != PAVR2_USB_VENDOR_ID) { continue; }
+
+        uint16_t productId = device.get_product_id();
+
+        bool isProgrammer =
+            productId == PAVR2_USB_PRODUCT_ID_V2 ||
+            productId == PAVR2_USB_PRODUCT_ID_V2_1;
+
         if (!isProgrammer) { continue; }
 
         libusbp::generic_interface usbInterface;
@@ -386,7 +402,7 @@ std::vector<ProgrammerInstance> programmerGetList()
             }
             throw;
         }
-        ProgrammerInstance instance(device, usbInterface,
+        ProgrammerInstance instance(device, usbInterface, productId,
             device.get_serial_number(), device.get_revision());
         list.push_back(instance);
     }
@@ -798,8 +814,8 @@ bool pgm03aPresent()
 {
     for (const libusbp::device & device : libusbp::list_connected_devices())
     {
-        bool isPgm03a = device.get_vendor_id() == USB_VENDOR_ID_POLOLU &&
-            device.get_product_id() == USB_PRODUCT_ID_PGM03A;
+        bool isPgm03a = device.get_vendor_id() == 0x1FFB &&
+            device.get_product_id() == 0x0081;
         if (isPgm03a) { return true; }
     }
     return false;
@@ -810,8 +826,8 @@ bool pgm03aPresent()
  * longer than 80 characters.  But if we add wrapping to it then it will look
  * bad when it is printed in a messagebox in a typical GUI. **/
 const char * pgm03aMessage =
-    "This utility only supports the Pololu USB AVR Programmer v2 "
-    "(blue-colored, labeled \"pgm04a\").\n"
+    "This utility only supports the Pololu USB AVR Programmer v2 and v2.1 "
+    "(blue-colored, labeled \"pgm04a\" or \"pgm04b\").\n"
     "\n"
     "It looks you have an older programmer, the Pololu USB AVR Programmer (pgm03a).  "
     "You can find documentation and software for the older programmer here:\n"

@@ -1,8 +1,22 @@
-/* This file defines the constants needed to communicate with the pgm04a
- * programmer's native USB interface. */
+// This file defines the constants needed to communicate with the native
+// USB interfaces of these devices:
+//
+// - Pololu USB AVR Programmer v2 (pgm04a)
+// - Pololu USB AVR Programmer v2.1 (pgm04b)
+
+// TODO: rename this file and all the macros to say pavr2 instead of pgm04a
+// because this file now supports pgm04b too
 
 #ifndef _PGM04A_NATIVE_USB_PROTOCOL_H
 #define _PGM04A_NATIVE_USB_PROTOCOL_H
+
+#define PAVR2_USB_VENDOR_ID 0x1FFB
+
+// USB product ID for pgm04a, Pololu USB AVR Programmer v2
+#define PAVR2_USB_PRODUCT_ID_V2 0x00B0
+
+// USB product ID for pgm04b, Pololu USB AVR Programmer v2.1
+#define PAVR2_USB_PRODUCT_ID_V2_1 0x00BB
 
 /* To get the value of a setting from the device, make a request like this:
  *   bRequestType = 0xC0
