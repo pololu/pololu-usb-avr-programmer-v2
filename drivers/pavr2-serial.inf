@@ -1,0 +1,70 @@
+; Copyright (C) 2018 Pololu Corporation
+
+[Strings]
+DriverPackageDisplayName="Pololu USB AVR Programmer v2 Ports"
+ManufacturerName="Pololu Corporation"
+ServiceName="Microsoft USB Serial Driver"
+p00B0m01="Pololu USB AVR Programmer v2 Programming Port"
+p00B0m03="Pololu USB AVR Programmer v2 TTL Serial Port"
+p00BBm01="Pololu USB AVR Programmer v2.1 Programming Port"
+p00BBm03="Pololu USB AVR Programmer v2.1 TTL Serial Port"
+
+[DefaultInstall]
+CopyINF=pavr2-serial.inf
+
+[Version]
+DriverVer=01/23/2018,1.0.0
+Signature=$Windows NT$
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%ManufacturerName%
+CatalogFile=pololu.cat
+DriverPackageDisplayName=%DriverPackageDisplayName%
+PnpLockdown=1
+
+[Manufacturer]
+%ManufacturerName%=Models,NTx86,NTamd64,NTarm
+
+[DestinationDirs]
+DefaultDestDir=12
+FakeModemCopyFileSection=12
+
+[Models.NTx86]
+%p00B0m01%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_01
+%p00B0m03%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_03
+%p00BBm01%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_01
+%p00BBm03%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_03
+
+[Models.NTamd64]
+%p00B0m01%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_01
+%p00B0m03%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_03
+%p00BBm01%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_01
+%p00BBm03%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_03
+
+[Models.NTarm]
+%p00B0m01%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_01
+%p00B0m03%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_03
+%p00BBm01%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_01
+%p00BBm03%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_03
+
+[DriverInstall]
+Include=mdmcpq.inf,usb.inf
+CopyFiles=FakeModemCopyFileSection
+AddReg=DriverAddReg
+
+[DriverAddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,usbser.sys
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[DriverInstall.Services]
+Include=mdmcpq.inf
+AddService=usbser,0x2,DriverService
+
+[DriverService]
+DisplayName=%ServiceName%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\usbser.sys
+LoadOrderGroup=Base
