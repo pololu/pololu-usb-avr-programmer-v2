@@ -5,7 +5,7 @@
 #include "frequency_validator.h"
 
 #include "pavrpgm_config.h"
-#include "pgm04a_native_usb_protocol.h"
+#include "pavr2_protocol.h"
 
 #include <QApplication>
 #include <QCheckBox>
@@ -605,9 +605,9 @@ static void setupVoltageInput(QGridLayout * layout, int row,
     QLabel ** label, QSpinBox ** value)
 {
     VoltageSpinBox * newValue = new VoltageSpinBox();
-    newValue->setRange(0, PGM04A_VOLTAGE_UNITS * 255);
+    newValue->setRange(0, PAVR2_VOLTAGE_UNITS * 255);
     newValue->setSuffix(" mV");
-    newValue->setSingleStep(PGM04A_VOLTAGE_UNITS);
+    newValue->setSingleStep(PAVR2_VOLTAGE_UNITS);
 
     QLabel * newLabel = new QLabel();
     newLabel->setBuddy(newValue);
@@ -900,9 +900,9 @@ QWidget * MainWindow::setupSettingsBox()
     {
         regulatorModeValue = new QComboBox();
         regulatorModeValue->setObjectName("regulatorModeValue");
-        regulatorModeValue->addItem("Auto", PGM04A_REGULATOR_MODE_AUTO);
-        regulatorModeValue->addItem("5 V", PGM04A_REGULATOR_MODE_5V);
-        regulatorModeValue->addItem("3.3 V", PGM04A_REGULATOR_MODE_3V3);
+        regulatorModeValue->addItem("Auto", PAVR2_REGULATOR_MODE_AUTO);
+        regulatorModeValue->addItem("5 V", PAVR2_REGULATOR_MODE_5V);
+        regulatorModeValue->addItem("3.3 V", PAVR2_REGULATOR_MODE_3V3);
         regulatorModeLabel = new QLabel();
         regulatorModeLabel->setBuddy(regulatorModeValue);
         layout->addWidget(regulatorModeLabel, row, 0, FIELD_LABEL_ALIGNMENT);
@@ -925,8 +925,8 @@ QWidget * MainWindow::setupSettingsBox()
     {
         vccOutputIndicatorValue = new QComboBox();
         vccOutputIndicatorValue->setObjectName("vccOutputIndicatorValue");
-        vccOutputIndicatorValue->addItem("Blinking", PGM04A_VCC_OUTPUT_INDICATOR_BLINKING);
-        vccOutputIndicatorValue->addItem("Steady", PGM04A_VCC_OUTPUT_INDICATOR_STEADY);
+        vccOutputIndicatorValue->addItem("Blinking", PAVR2_VCC_OUTPUT_INDICATOR_BLINKING);
+        vccOutputIndicatorValue->addItem("Steady", PAVR2_VCC_OUTPUT_INDICATOR_STEADY);
         vccOutputIndicatorLabel = new QLabel();
         vccOutputIndicatorLabel->setObjectName("vccOutputIndicatorLabel");
         layout->addWidget(vccOutputIndicatorLabel, row, 0, FIELD_LABEL_ALIGNMENT);
@@ -937,12 +937,12 @@ QWidget * MainWindow::setupSettingsBox()
     {
         lineAFunctionValue = new QComboBox();
         lineAFunctionValue->setObjectName("lineAFunctionValue");
-        lineAFunctionValue->addItem("(none)", PGM04A_LINE_IS_NOTHING);
-        lineAFunctionValue->addItem("CD (input)", PGM04A_LINE_IS_CD);
-        lineAFunctionValue->addItem("DSR (input)", PGM04A_LINE_IS_DSR);
-        lineAFunctionValue->addItem("DTR (output)", PGM04A_LINE_IS_DTR);
-        lineAFunctionValue->addItem("RTS (output)", PGM04A_LINE_IS_RTS);
-        lineAFunctionValue->addItem("DTR reset (output)", PGM04A_LINE_IS_DTR_RESET);
+        lineAFunctionValue->addItem("(none)", PAVR2_LINE_IS_NOTHING);
+        lineAFunctionValue->addItem("CD (input)", PAVR2_LINE_IS_CD);
+        lineAFunctionValue->addItem("DSR (input)", PAVR2_LINE_IS_DSR);
+        lineAFunctionValue->addItem("DTR (output)", PAVR2_LINE_IS_DTR);
+        lineAFunctionValue->addItem("RTS (output)", PAVR2_LINE_IS_RTS);
+        lineAFunctionValue->addItem("DTR reset (output)", PAVR2_LINE_IS_DTR_RESET);
         lineAFunctionLabel = new QLabel();
         lineAFunctionLabel->setBuddy(lineAFunctionValue);
         layout->addWidget(lineAFunctionLabel, row, 0, FIELD_LABEL_ALIGNMENT);
@@ -953,13 +953,13 @@ QWidget * MainWindow::setupSettingsBox()
     {
         lineBFunctionValue = new QComboBox();
         lineBFunctionValue->setObjectName("lineBFunctionValue");
-        lineBFunctionValue->addItem("(none)", PGM04A_LINE_IS_NOTHING);
-        lineBFunctionValue->addItem("CD (input)", PGM04A_LINE_IS_CD);
-        lineBFunctionValue->addItem("DSR (input)", PGM04A_LINE_IS_DSR);
-        lineBFunctionValue->addItem("DTR (output)", PGM04A_LINE_IS_DTR);
-        lineBFunctionValue->addItem("RTS (output)", PGM04A_LINE_IS_RTS);
-        lineBFunctionValue->addItem("Clock (output)", PGM04A_LINE_IS_CLOCK);
-        lineBFunctionValue->addItem("DTR reset (output)", PGM04A_LINE_IS_DTR_RESET);
+        lineBFunctionValue->addItem("(none)", PAVR2_LINE_IS_NOTHING);
+        lineBFunctionValue->addItem("CD (input)", PAVR2_LINE_IS_CD);
+        lineBFunctionValue->addItem("DSR (input)", PAVR2_LINE_IS_DSR);
+        lineBFunctionValue->addItem("DTR (output)", PAVR2_LINE_IS_DTR);
+        lineBFunctionValue->addItem("RTS (output)", PAVR2_LINE_IS_RTS);
+        lineBFunctionValue->addItem("Clock (output)", PAVR2_LINE_IS_CLOCK);
+        lineBFunctionValue->addItem("DTR reset (output)", PAVR2_LINE_IS_DTR_RESET);
         lineBFunctionLabel = new QLabel();
         lineBFunctionLabel->setBuddy(lineBFunctionValue);
         layout->addWidget(lineBFunctionLabel, row, 0, FIELD_LABEL_ALIGNMENT);

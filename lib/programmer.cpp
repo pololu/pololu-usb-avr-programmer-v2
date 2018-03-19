@@ -13,8 +13,8 @@
 
 // pgm04a uses voltage units of 32 mV, so the maximum representable voltage
 // is 8160 mV.
-static const uint32_t maxRepresentableVoltage = 255 * PGM04A_VOLTAGE_UNITS;
-#if PGM04A_VOLTAGE_UNITS == 32
+static const uint32_t maxRepresentableVoltage = 255 * PAVR2_VOLTAGE_UNITS;
+#if PAVR2_VOLTAGE_UNITS == 32
 #define MAX_REPRESENTABLE_VOLTAGE_STR "8160 mV"
 #endif
 
@@ -135,22 +135,22 @@ std::string Programmer::convertProgrammingErrorToShortString(uint8_t programming
     case 0:
         return "No error.";
 
-    case PGM04A_PROGRAMMING_ERROR_TARGET_POWER_BAD:
+    case PAVR2_PROGRAMMING_ERROR_TARGET_POWER_BAD:
         return "Target power error.";
 
-    case PGM04A_PROGRAMMING_ERROR_SYNCH:
+    case PAVR2_PROGRAMMING_ERROR_SYNCH:
         return "Initial SPI command failed.";
 
-    case PGM04A_PROGRAMMING_ERROR_IDLE_FOR_TOO_LONG:
+    case PAVR2_PROGRAMMING_ERROR_IDLE_FOR_TOO_LONG:
         return "Idle error.";
 
-    case PGM04A_PROGRAMMING_ERROR_USB_NOT_CONFIGURED:
+    case PAVR2_PROGRAMMING_ERROR_USB_NOT_CONFIGURED:
         return "USB not configured.";
 
-    case PGM04A_PROGRAMMING_ERROR_USB_SUSPEND:
+    case PAVR2_PROGRAMMING_ERROR_USB_SUSPEND:
         return "USB suspended.";
 
-    case PGM04A_PROGRAMMING_ERROR_PROGRAMMER_POWER_BAD:
+    case PAVR2_PROGRAMMING_ERROR_PROGRAMMER_POWER_BAD:
         return "Programmer power error.";
 
     default:
@@ -165,32 +165,32 @@ std::string Programmer::convertProgrammingErrorToLongString(uint8_t programmingE
     case 0:
         return "";
 
-    case PGM04A_PROGRAMMING_ERROR_TARGET_POWER_BAD:
+    case PAVR2_PROGRAMMING_ERROR_TARGET_POWER_BAD:
         return "Target VCC went outside of the allowed range, "
             "so programming was aborted.  "
             "Make sure that the target is powered on and its batteries "
             "are not too low (if applicable).";
 
-    case PGM04A_PROGRAMMING_ERROR_SYNCH:
+    case PAVR2_PROGRAMMING_ERROR_SYNCH:
         return "The SPI command for entering programming mode was sent, "
             "but the expected response from the target was not received.  "
             "Make sure that the ISP frequency is less than one sixth "
             "of the target's clock frequency.";
 
-    case PGM04A_PROGRAMMING_ERROR_IDLE_FOR_TOO_LONG:
+    case PAVR2_PROGRAMMING_ERROR_IDLE_FOR_TOO_LONG:
         return "The programmer received no programming commands from the "
             "computer for a time longer than the timeout period, "
             "so programming was aborted.";
 
-    case PGM04A_PROGRAMMING_ERROR_USB_NOT_CONFIGURED:
+    case PAVR2_PROGRAMMING_ERROR_USB_NOT_CONFIGURED:
         return "The computer's USB controller deconfigured the programmer, "
             "so programming was aborted.";
 
-    case PGM04A_PROGRAMMING_ERROR_USB_SUSPEND:
+    case PAVR2_PROGRAMMING_ERROR_USB_SUSPEND:
         return "The computer's USB controller put the programmer into suspend mode, "
             "so programming was aborted.";
 
-    case PGM04A_PROGRAMMING_ERROR_PROGRAMMER_POWER_BAD:
+    case PAVR2_PROGRAMMING_ERROR_PROGRAMMER_POWER_BAD:
         return "The programmer's VDD either went too low or had too much range, "
             "so programming was aborted.";
 
@@ -203,25 +203,25 @@ std::string Programmer::convertDeviceResetToString(uint8_t deviceReset)
 {
     switch(deviceReset)
     {
-    case PGM04A_RESET_POWER_UP:
+    case PAVR2_RESET_POWER_UP:
         return "Power-on reset";
 
-    case PGM04A_RESET_BROWNOUT:
+    case PAVR2_RESET_BROWNOUT:
         return "Brown-out reset";
 
-    case PGM04A_RESET_RESET_LINE:
+    case PAVR2_RESET_RESET_LINE:
         return "Reset pin driven low";
 
-    case PGM04A_RESET_WATCHDOG:
+    case PAVR2_RESET_WATCHDOG:
         return "Watchdog reset";
 
-    case PGM04A_RESET_SOFTWARE:
+    case PAVR2_RESET_SOFTWARE:
         return "Software reset (bootloader)";
 
-    case PGM04A_RESET_STACK_OVERFLOW:
+    case PAVR2_RESET_STACK_OVERFLOW:
         return "Stack overflow";
 
-    case PGM04A_RESET_STACK_UNDERFLOW:
+    case PAVR2_RESET_STACK_UNDERFLOW:
         return "Stack underflow";
 
     default:
@@ -233,8 +233,8 @@ std::string Programmer::convertRegulatorModeToString(uint8_t regulatorMode)
 {
     switch (regulatorMode)
     {
-    case PGM04A_REGULATOR_MODE_3V3:  return "3.3 V";
-    case PGM04A_REGULATOR_MODE_5V:   return "5 V";
+    case PAVR2_REGULATOR_MODE_3V3:  return "3.3 V";
+    case PAVR2_REGULATOR_MODE_5V:   return "5 V";
     default: return "auto";
     }
 }
@@ -249,12 +249,12 @@ std::string Programmer::convertLineFunctionToString(uint8_t lineFunction)
 {
     switch (lineFunction)
     {
-    case PGM04A_LINE_IS_DTR: return "DTR";
-    case PGM04A_LINE_IS_RTS: return "RTS";
-    case PGM04A_LINE_IS_CD: return "CD";
-    case PGM04A_LINE_IS_DSR: return "DSR";
-    case PGM04A_LINE_IS_CLOCK: return "Clock";
-    case PGM04A_LINE_IS_DTR_RESET: return "DTR reset";
+    case PAVR2_LINE_IS_DTR: return "DTR";
+    case PAVR2_LINE_IS_RTS: return "RTS";
+    case PAVR2_LINE_IS_CD: return "CD";
+    case PAVR2_LINE_IS_DSR: return "DSR";
+    case PAVR2_LINE_IS_CLOCK: return "Clock";
+    case PAVR2_LINE_IS_DTR_RESET: return "DTR reset";
     default: return "None";
     }
 }
@@ -417,7 +417,7 @@ ProgrammerHandle::ProgrammerHandle(ProgrammerInstance instance)
 {
     assert(instance);
 
-    if (instance.getFirmwareVersionMajor() > PGM04A_FIRMWARE_VERSION_MAJOR_MAX)
+    if (instance.getFirmwareVersionMajor() > PAVR2_FIRMWARE_VERSION_MAJOR_MAX)
     {
         throw std::runtime_error(
             "The device has new firmware that is not supported by this software.  "
@@ -449,7 +449,7 @@ uint8_t ProgrammerHandle::getRawSetting(uint8_t id)
     size_t transferred;
     try
     {
-        handle.control_transfer(0xC0, PGM04A_REQUEST_GET_SETTING,
+        handle.control_transfer(0xC0, PAVR2_REQUEST_GET_SETTING,
             0, id, &value, 1, &transferred);
     }
     catch (const libusbp::error & error)
@@ -471,7 +471,7 @@ void ProgrammerHandle::setRawSetting(uint8_t id, uint8_t value)
 {
     try
     {
-        handle.control_transfer(0x40, PGM04A_REQUEST_SET_SETTING, value, id);
+        handle.control_transfer(0x40, PAVR2_REQUEST_SET_SETTING, value, id);
     }
     catch(const libusbp::error & error)
     {
@@ -486,7 +486,7 @@ uint8_t ProgrammerHandle::getRawVariable(uint8_t id)
     size_t transferred;
     try
     {
-        handle.control_transfer(0xC0, PGM04A_REQUEST_GET_VARIABLE,
+        handle.control_transfer(0xC0, PAVR2_REQUEST_GET_VARIABLE,
             0, id, &value, 1, &transferred);
     }
     catch (const libusbp::error & error)
@@ -550,22 +550,22 @@ std::string ProgrammerHandle::getFirmwareVersionString()
 ProgrammerSettings ProgrammerHandle::getSettings()
 {
     ProgrammerSettings settings;
-    settings.sckDuration = getRawSetting(PGM04A_SETTING_SCK_DURATION);
-    settings.ispFastestPeriod = getRawSetting(PGM04A_SETTING_ISP_FASTEST_PERIOD);
-    settings.regulatorMode = getRawSetting(PGM04A_SETTING_REGULATOR_MODE);
-    settings.vccOutputEnabled = getRawSetting(PGM04A_SETTING_VCC_OUTPUT_ENABLED) ? 1 : 0;
-    settings.vccOutputIndicator = getRawSetting(PGM04A_SETTING_VCC_OUTPUT_INDICATOR) ? 1 : 0;
-    settings.lineAFunction = getRawSetting(PGM04A_SETTING_LINE_A_FUNCTION);
-    settings.lineBFunction = getRawSetting(PGM04A_SETTING_LINE_B_FUNCTION);
-    settings.softwareVersionMajor = getRawSetting(PGM04A_SETTING_SOFTWARE_VERSION_MAJOR);
-    settings.softwareVersionMinor = getRawSetting(PGM04A_SETTING_SOFTWARE_VERSION_MINOR);
-    settings.hardwareVersion = getRawSetting(PGM04A_SETTING_HARDWARE_VERSION);
-    settings.vccVddMaxRange = getRawSetting(PGM04A_SETTING_VCC_VDD_MAX_RANGE)
-        * PGM04A_VOLTAGE_UNITS;
-    settings.vcc3v3Min = getRawSetting(PGM04A_SETTING_VCC_3V3_MIN) * PGM04A_VOLTAGE_UNITS;
-    settings.vcc3v3Max = getRawSetting(PGM04A_SETTING_VCC_3V3_MAX) * PGM04A_VOLTAGE_UNITS;
-    settings.vcc5vMin = getRawSetting(PGM04A_SETTING_VCC_5V_MIN) * PGM04A_VOLTAGE_UNITS;
-    settings.vcc5vMax = getRawSetting(PGM04A_SETTING_VCC_5V_MAX) * PGM04A_VOLTAGE_UNITS;
+    settings.sckDuration = getRawSetting(PAVR2_SETTING_SCK_DURATION);
+    settings.ispFastestPeriod = getRawSetting(PAVR2_SETTING_ISP_FASTEST_PERIOD);
+    settings.regulatorMode = getRawSetting(PAVR2_SETTING_REGULATOR_MODE);
+    settings.vccOutputEnabled = getRawSetting(PAVR2_SETTING_VCC_OUTPUT_ENABLED) ? 1 : 0;
+    settings.vccOutputIndicator = getRawSetting(PAVR2_SETTING_VCC_OUTPUT_INDICATOR) ? 1 : 0;
+    settings.lineAFunction = getRawSetting(PAVR2_SETTING_LINE_A_FUNCTION);
+    settings.lineBFunction = getRawSetting(PAVR2_SETTING_LINE_B_FUNCTION);
+    settings.softwareVersionMajor = getRawSetting(PAVR2_SETTING_SOFTWARE_VERSION_MAJOR);
+    settings.softwareVersionMinor = getRawSetting(PAVR2_SETTING_SOFTWARE_VERSION_MINOR);
+    settings.hardwareVersion = getRawSetting(PAVR2_SETTING_HARDWARE_VERSION);
+    settings.vccVddMaxRange = getRawSetting(PAVR2_SETTING_VCC_VDD_MAX_RANGE)
+        * PAVR2_VOLTAGE_UNITS;
+    settings.vcc3v3Min = getRawSetting(PAVR2_SETTING_VCC_3V3_MIN) * PAVR2_VOLTAGE_UNITS;
+    settings.vcc3v3Max = getRawSetting(PAVR2_SETTING_VCC_3V3_MAX) * PAVR2_VOLTAGE_UNITS;
+    settings.vcc5vMin = getRawSetting(PAVR2_SETTING_VCC_5V_MIN) * PAVR2_VOLTAGE_UNITS;
+    settings.vcc5vMax = getRawSetting(PAVR2_SETTING_VCC_5V_MAX) * PAVR2_VOLTAGE_UNITS;
 
     // We don't read the reset polarity here because that gets set by programming
     // software before each session; it is not really a persistent setting
@@ -582,34 +582,34 @@ void ProgrammerHandle::validateSettings(const ProgrammerSettings & settings)
         throw std::runtime_error("The SCK duration should be at most 255.");
     }
 
-    if (settings.ispFastestPeriod < PGM04A_ISP_FASTEST_PERIOD_MIN
-        || settings.ispFastestPeriod > PGM04A_ISP_FASTEST_PERIOD_MAX)
+    if (settings.ispFastestPeriod < PAVR2_ISP_FASTEST_PERIOD_MIN
+        || settings.ispFastestPeriod > PAVR2_ISP_FASTEST_PERIOD_MAX)
     {
         throw std::runtime_error("The ISP fastest period is not valid.");
     }
 
-    if (settings.regulatorMode > PGM04A_REGULATOR_MODE_5V)
+    if (settings.regulatorMode > PAVR2_REGULATOR_MODE_5V)
     {
         throw std::runtime_error("Invalid regulator mode.");
     }
 
-    if (settings.regulatorMode == PGM04A_REGULATOR_MODE_AUTO &&
+    if (settings.regulatorMode == PAVR2_REGULATOR_MODE_AUTO &&
         settings.vccOutputEnabled)
     {
         throw std::runtime_error("VCC cannot be an output if the regulator mode is auto.");
     }
 
-    if (settings.lineAFunction > PGM04A_LINE_IS_DTR_RESET)
+    if (settings.lineAFunction > PAVR2_LINE_IS_DTR_RESET)
     {
         throw std::runtime_error("Invalid line A function.");
     }
 
-    if (settings.lineAFunction == PGM04A_LINE_IS_CLOCK)
+    if (settings.lineAFunction == PAVR2_LINE_IS_CLOCK)
     {
         throw std::runtime_error("Line A cannot be a clock output.");
     }
 
-    if (settings.lineBFunction > PGM04A_LINE_IS_DTR_RESET)
+    if (settings.lineBFunction > PAVR2_LINE_IS_DTR_RESET)
     {
         throw std::runtime_error("Invalid line B function.");
     }
@@ -663,10 +663,10 @@ void ProgrammerHandle::validateSettings(const ProgrammerSettings & settings)
     }
 }
 
-// Divide by PGM04A_VOLTAGE_UNITs, rounding to the nearest integer.
+// Divide by PAVR2_VOLTAGE_UNITs, rounding to the nearest integer.
 static uint8_t convertMvToRawUnits(uint32_t mv)
 {
-    uint32_t x = (mv + PGM04A_VOLTAGE_UNITS / 2 - 1) / PGM04A_VOLTAGE_UNITS;
+    uint32_t x = (mv + PAVR2_VOLTAGE_UNITS / 2 - 1) / PAVR2_VOLTAGE_UNITS;
     if (x > 0xFF)
     {
         x = 0xFF;
@@ -687,38 +687,38 @@ void ProgrammerHandle::applySettings(const ProgrammerSettings & settings)
     // we won't accidentally output the wrong voltage on VCC for some time.
     if (!settings.vccOutputEnabled)
     {
-        setRawSetting(PGM04A_SETTING_VCC_OUTPUT_ENABLED, 0);
+        setRawSetting(PAVR2_SETTING_VCC_OUTPUT_ENABLED, 0);
     }
 
-    setRawSetting(PGM04A_SETTING_SCK_DURATION, settings.sckDuration);
-    setRawSetting(PGM04A_SETTING_ISP_FASTEST_PERIOD, settings.ispFastestPeriod);
-    setRawSetting(PGM04A_SETTING_REGULATOR_MODE, settings.regulatorMode);
-    setRawSetting(PGM04A_SETTING_VCC_OUTPUT_INDICATOR, settings.vccOutputIndicator);
-    setRawSetting(PGM04A_SETTING_LINE_A_FUNCTION, settings.lineAFunction);
-    setRawSetting(PGM04A_SETTING_LINE_B_FUNCTION, settings.lineBFunction);
-    setRawSetting(PGM04A_SETTING_SOFTWARE_VERSION_MAJOR, settings.softwareVersionMajor);
-    setRawSetting(PGM04A_SETTING_SOFTWARE_VERSION_MINOR, settings.softwareVersionMinor);
-    setRawSetting(PGM04A_SETTING_HARDWARE_VERSION, settings.hardwareVersion);
-    setRawSetting(PGM04A_SETTING_VCC_VDD_MAX_RANGE,
+    setRawSetting(PAVR2_SETTING_SCK_DURATION, settings.sckDuration);
+    setRawSetting(PAVR2_SETTING_ISP_FASTEST_PERIOD, settings.ispFastestPeriod);
+    setRawSetting(PAVR2_SETTING_REGULATOR_MODE, settings.regulatorMode);
+    setRawSetting(PAVR2_SETTING_VCC_OUTPUT_INDICATOR, settings.vccOutputIndicator);
+    setRawSetting(PAVR2_SETTING_LINE_A_FUNCTION, settings.lineAFunction);
+    setRawSetting(PAVR2_SETTING_LINE_B_FUNCTION, settings.lineBFunction);
+    setRawSetting(PAVR2_SETTING_SOFTWARE_VERSION_MAJOR, settings.softwareVersionMajor);
+    setRawSetting(PAVR2_SETTING_SOFTWARE_VERSION_MINOR, settings.softwareVersionMinor);
+    setRawSetting(PAVR2_SETTING_HARDWARE_VERSION, settings.hardwareVersion);
+    setRawSetting(PAVR2_SETTING_VCC_VDD_MAX_RANGE,
         convertMvToRawUnits(settings.vccVddMaxRange));
-    setRawSetting(PGM04A_SETTING_VCC_3V3_MIN,
+    setRawSetting(PAVR2_SETTING_VCC_3V3_MIN,
         convertMvToRawUnits(settings.vcc3v3Min));
-    setRawSetting(PGM04A_SETTING_VCC_3V3_MAX,
+    setRawSetting(PAVR2_SETTING_VCC_3V3_MAX,
         convertMvToRawUnits(settings.vcc3v3Max));
-    setRawSetting(PGM04A_SETTING_VCC_5V_MIN,
+    setRawSetting(PAVR2_SETTING_VCC_5V_MIN,
         convertMvToRawUnits(settings.vcc5vMin));
-    setRawSetting(PGM04A_SETTING_VCC_5V_MAX,
+    setRawSetting(PAVR2_SETTING_VCC_5V_MAX,
         convertMvToRawUnits(settings.vcc5vMax));
 
     if (settings.vccOutputEnabled)
     {
-        setRawSetting(PGM04A_SETTING_VCC_OUTPUT_ENABLED, 1);
+        setRawSetting(PAVR2_SETTING_VCC_OUTPUT_ENABLED, 1);
     }
 }
 
 void ProgrammerHandle::restoreDefaults()
 {
-    setRawSetting(PGM04A_SETTING_NOT_INITIALIZED, 0xFF);
+    setRawSetting(PAVR2_SETTING_NOT_INITIALIZED, 0xFF);
 
     // The request above returns before the settings are actually initialized.
     // Wait until the programmer succeeds in reinitializing its settings.
@@ -728,7 +728,7 @@ void ProgrammerHandle::restoreDefaults()
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         timeMs += 10;
 
-        uint8_t notInitialized = getRawSetting(PGM04A_SETTING_NOT_INITIALIZED);
+        uint8_t notInitialized = getRawSetting(PAVR2_SETTING_NOT_INITIALIZED);
         if (!notInitialized)
         {
             break;
@@ -746,38 +746,38 @@ ProgrammerVariables ProgrammerHandle::getVariables()
 {
     ProgrammerVariables vars;
 
-    vars.lastDeviceReset = getRawVariable(PGM04A_VARIABLE_LAST_DEVICE_RESET);
+    vars.lastDeviceReset = getRawVariable(PAVR2_VARIABLE_LAST_DEVICE_RESET);
 
-    vars.programmingError = getRawVariable(PGM04A_VARIABLE_PROGRAMMING_ERROR);
+    vars.programmingError = getRawVariable(PAVR2_VARIABLE_PROGRAMMING_ERROR);
 
     vars.targetVccMeasuredMinMv =
-        getRawVariable(PGM04A_VARIABLE_TARGET_VCC_MEASURED_MIN) * PGM04A_VOLTAGE_UNITS;
+        getRawVariable(PAVR2_VARIABLE_TARGET_VCC_MEASURED_MIN) * PAVR2_VOLTAGE_UNITS;
 
     vars.targetVccMeasuredMaxMv =
-        getRawVariable(PGM04A_VARIABLE_TARGET_VCC_MEASURED_MAX) * PGM04A_VOLTAGE_UNITS;
+        getRawVariable(PAVR2_VARIABLE_TARGET_VCC_MEASURED_MAX) * PAVR2_VOLTAGE_UNITS;
 
     vars.programmerVddMeasuredMinMv =
-        getRawVariable(PGM04A_VARIABLE_PROGRAMMER_VDD_MEASURED_MIN) * PGM04A_VOLTAGE_UNITS;
+        getRawVariable(PAVR2_VARIABLE_PROGRAMMER_VDD_MEASURED_MIN) * PAVR2_VOLTAGE_UNITS;
 
     vars.programmerVddMeasuredMaxMv =
-        getRawVariable(PGM04A_VARIABLE_PROGRAMMER_VDD_MEASURED_MAX) * PGM04A_VOLTAGE_UNITS;
+        getRawVariable(PAVR2_VARIABLE_PROGRAMMER_VDD_MEASURED_MAX) * PAVR2_VOLTAGE_UNITS;
 
     vars.hasResultsFromLastProgramming =
         (vars.programmingError != 0) ||
-        (vars.targetVccMeasuredMinMv != 255 * PGM04A_VOLTAGE_UNITS) ||
+        (vars.targetVccMeasuredMinMv != 255 * PAVR2_VOLTAGE_UNITS) ||
         (vars.targetVccMeasuredMaxMv != 0) ||
-        (vars.programmerVddMeasuredMinMv != 255 * PGM04A_VOLTAGE_UNITS) ||
+        (vars.programmerVddMeasuredMinMv != 255 * PAVR2_VOLTAGE_UNITS) ||
         (vars.programmerVddMeasuredMaxMv != 0);
 
     vars.targetVccMv =
-        getRawVariable(PGM04A_VARIABLE_TARGET_VCC) * PGM04A_VOLTAGE_UNITS;
+        getRawVariable(PAVR2_VARIABLE_TARGET_VCC) * PAVR2_VOLTAGE_UNITS;
 
     vars.programmerVddMv =
-        getRawVariable(PGM04A_VARIABLE_PROGRAMMER_VDD) * PGM04A_VOLTAGE_UNITS;
+        getRawVariable(PAVR2_VARIABLE_PROGRAMMER_VDD) * PAVR2_VOLTAGE_UNITS;
 
-    vars.regulatorLevel = getRawVariable(PGM04A_VARIABLE_REGULATOR_LEVEL);
+    vars.regulatorLevel = getRawVariable(PAVR2_VARIABLE_REGULATOR_LEVEL);
 
-    vars.inProgrammingMode = getRawVariable(PGM04A_VARIABLE_IN_PROGRAMMING_MODE) ? 1 : 0;
+    vars.inProgrammingMode = getRawVariable(PAVR2_VARIABLE_IN_PROGRAMMING_MODE) ? 1 : 0;
 
     return vars;
 }
@@ -788,7 +788,7 @@ ProgrammerDigitalReadings ProgrammerHandle::digitalRead()
     size_t transferred;
     try
     {
-        handle.control_transfer(0xC0, PGM04A_REQUEST_DIGITAL_READ,
+        handle.control_transfer(0xC0, PAVR2_REQUEST_DIGITAL_READ,
             0, 0, &buffer, 3, &transferred);
     }
     catch (const libusbp::error & error)

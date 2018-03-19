@@ -16,14 +16,13 @@
 #include <string>
 #include <cstdint>
 
-#include "pgm04a_native_usb_protocol.h"
+#include "pavr2_protocol.h"
 #include "programmer_frequency_tables.h"
 
 /** The maximum firmware major version supported by this program.  If we make a
  * breaking change in the firmware, we can use this to be sure that old software
  * will not try to talk to new firmware and mess something up. */
-#define PGM04A_FIRMWARE_VERSION_MAJOR_MAX 1
-// TODO: fix references to pgm04a like this that should be changed to pavr2
+#define PAVR2_FIRMWARE_VERSION_MAJOR_MAX 1
 
 struct ProgrammerSettings;
 struct ProgrammerVariables;

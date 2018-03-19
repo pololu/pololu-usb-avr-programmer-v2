@@ -1,5 +1,5 @@
 #include "voltage_spin_box.h"
-#include "pgm04a_native_usb_protocol.h"
+#include "pavr2_protocol.h"
 #include <cassert>
 
 int VoltageSpinBox::numericValue(const QString & input) const
@@ -24,7 +24,7 @@ QValidator::State VoltageSpinBox::validate(QString & input, int & pos) const
         // Our parent class thinks this input is acceptable.  But if it is not
         // a multiple of 32, we want to consider it an intermediate value
         // instead.
-        if ((numericValue(input) % PGM04A_VOLTAGE_UNITS) != 0)
+        if ((numericValue(input) % PAVR2_VOLTAGE_UNITS) != 0)
         {
             result = QValidator::Intermediate;
         }
@@ -40,10 +40,10 @@ void VoltageSpinBox::fixup(QString & input) const
     // QSpinBox::validate fixes them.
 
     int num = numericValue(input);
-    if ((num % PGM04A_VOLTAGE_UNITS) != 0)
+    if ((num % PAVR2_VOLTAGE_UNITS) != 0)
     {
-        int fixedNum = (num + (PGM04A_VOLTAGE_UNITS / 2))
-            / PGM04A_VOLTAGE_UNITS * PGM04A_VOLTAGE_UNITS;
+        int fixedNum = (num + (PAVR2_VOLTAGE_UNITS / 2))
+            / PAVR2_VOLTAGE_UNITS * PAVR2_VOLTAGE_UNITS;
         input = QString::number(fixedNum);
     }
 }

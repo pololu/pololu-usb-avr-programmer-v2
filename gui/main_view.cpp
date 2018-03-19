@@ -132,8 +132,8 @@ void MainView::handleVariablesChanged()
     // Uncomment this code to test that the GUI can show the longest error
     // message:
     // window.setProgrammingError(
-    //     Programmer::convertProgrammingErrorToShortString(PGM04A_PROGRAMMING_ERROR_SYNCH),
-    //     Programmer::convertProgrammingErrorToLongString(PGM04A_PROGRAMMING_ERROR_SYNCH));
+    //     Programmer::convertProgrammingErrorToShortString(PAVR2_PROGRAMMING_ERROR_SYNCH),
+    //     Programmer::convertProgrammingErrorToLongString(PAVR2_PROGRAMMING_ERROR_SYNCH));
 
     if (vars.hasResultsFromLastProgramming)
     {
