@@ -6,4 +6,5 @@ rec {
     cross_inputs = [ env.libusbp env.qt.base ];
   };
   win32 = build nixcrpkgs.win32;
+  linux32 = build nixcrpkgs.linux32;
 }

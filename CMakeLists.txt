@@ -12,8 +12,8 @@ set (GUI_NAME "pavr2gui")
 set (DOCUMENTATION_URL "https://www.pololu.com/docs/0J67")
 
 set (SOFTWARE_VERSION_MAJOR 1)
-set (SOFTWARE_VERSION_MINOR 0)
-set (SOFTWARE_VERSION_PATCH 2)
+set (SOFTWARE_VERSION_MINOR 1)
+set (SOFTWARE_VERSION_PATCH 0)
 set (SOFTWARE_VERSION ${SOFTWARE_VERSION_MAJOR}.${SOFTWARE_VERSION_MINOR}.${SOFTWARE_VERSION_PATCH})
 
 # Don't use -rdynamic since it causes musl static linking to not work.
