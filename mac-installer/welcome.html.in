@@ -7,13 +7,14 @@ body { font-family: sans-serif; }
 <p>
 
 This package installs the configuration software for the <b>Pololu USB AVR
-Programmer v2</b> on your computer. Please note that <b>v2</b> is the version of the
-hardware product.  The version number of this software is ${SOFTWARE_VERSION}.
+Programmer v2.x</b> on your computer. Please note that <b>v2.x</b> refers to the
+the versions of the hardware products.
+The version number of this software is ${SOFTWARE_VERSION}.
 
 <p>
 
-This software only supports the Pololu USB AVR Programmer <b>v2</b>, which is
-<b>blue-colored</b> and labeled <b>pgm04a</b>.  If you have an older Pololu
+This software only supports the Pololu USB AVR Programmer <b>v2</b> and <b>v2.1</b>,
+which are <b>blue-colored</b>.  If you have an older Pololu
 programmer, refer to the product page and user's guide of that programmer for
 software.
 

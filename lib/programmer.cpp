@@ -11,8 +11,8 @@
 // A descriptor type from USB 2.0 Table 9-5
 #define USB_DESCRIPTOR_TYPE_STRING 3
 
-// pgm04a uses voltage units of 32 mV, so the maximum representable voltage
-// is 8160 mV.
+// The programmer uses voltage units of 32 mV, so the maximum representable
+// voltage is 8160 mV.
 static const uint32_t maxRepresentableVoltage = 255 * PAVR2_VOLTAGE_UNITS;
 #if PAVR2_VOLTAGE_UNITS == 32
 #define MAX_REPRESENTABLE_VOLTAGE_STR "8160 mV"
