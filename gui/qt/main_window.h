@@ -191,8 +191,6 @@ private:
     QWidget * setupSettingsBox();
     QWidget * setupFooter();
     QWidget * setupConnectionStatus();
-    QWidget * setupCancelChangesButton();
-    QWidget * setupDefaultsButton();
     QWidget * setupApplyButton();
     void retranslate();
 

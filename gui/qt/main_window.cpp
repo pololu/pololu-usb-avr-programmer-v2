@@ -1062,9 +1062,6 @@ QWidget * MainWindow::setupFooter()
 
     int col = 0;
     layout->addWidget(setupConnectionStatus(), 0, col++, Qt::AlignLeft);
-    // TODO: remove code for defaultsButton and cancelChangesButton
-    //layout->addWidget(setupDefaultsButton(), 0, col++, Qt::AlignRight);
-    //layout->addWidget(setupCancelChangesButton(), 0, col++, Qt::AlignRight);
     layout->addWidget(setupApplyButton(), 0, col++, Qt::AlignRight);
 
     layout->setColumnStretch(0, 1);
@@ -1077,20 +1074,6 @@ QWidget * MainWindow::setupConnectionStatus()
 {
     connectionStatusValue = new QLabel();
     return connectionStatusValue;
-}
-
-QWidget * MainWindow::setupCancelChangesButton()
-{
-    cancelChangesButton = new QPushButton();
-    cancelChangesButton->setObjectName("cancelChangesButton");
-    return cancelChangesButton;
-}
-
-QWidget * MainWindow::setupDefaultsButton()
-{
-    defaultsButton = new QPushButton();
-    defaultsButton->setObjectName("defaultsButton");
-    return defaultsButton;
 }
 
 QWidget * MainWindow::setupApplyButton()
@@ -1155,7 +1138,5 @@ void MainWindow::retranslate()
     stk500HardwareVersionLabel->setText(tr("STK500 hardware version") + FIELD_LABEL_SUFFIX);
     stk500SoftwareVersionLabel->setText(tr("STK500 software version") + FIELD_LABEL_SUFFIX);
 
-    //cancelChangesButton->setText("Cancel Changes"); // TODO: use same name as menu item
-    //defaultsButton->setText("Defaults"); // TODO: use same name as menu item
     applySettingsButton->setText(applySettingsAction->text());
 }
