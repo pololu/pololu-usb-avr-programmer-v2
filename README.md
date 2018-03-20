@@ -1,4 +1,4 @@
-# Pololu USB AVR Programmer v2.x software
+# Pololu USB AVR Programmer v2 software
 
 Version: 1.0.2<br/>
 Release date: 2016 May 05<br/>
@@ -15,7 +15,7 @@ which are *blue-colored*.  If you have an older Pololu programmer,
 refer to the product page and user's guide of that programmer for software
 resources.
 
-Note that the *v2.x* in the name of this repository refers to the versions of the
+Note that the *v2* in the name of this repository refers to the versions of the
 hardware products, which is different from the version number of this software.
 
 This software is only used for configuring the programmer and reading
@@ -25,7 +25,7 @@ software such as AVRDUDE or Atmel Studio.
 ## Installation
 
 Installers for Windows and Mac OS X are available for download from the Pololu
-USB AVR Programmer v2.x User's Guide:
+USB AVR Programmer v2 User's Guide:
 
   http://www.pololu.com/docs/0J67
 
