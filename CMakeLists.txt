@@ -1,5 +1,21 @@
 cmake_minimum_required (VERSION 2.8.11)
-project (pavrpgm)
+
+# Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
+if (POLICY CMP0025)
+  cmake_policy(SET CMP0025 NEW)
+endif ()
+
+# Fix a warning on Mac OS X.
+if (POLICY CMP0042)
+  cmake_policy(SET CMP0042 NEW)
+endif ()
+
+# Don't use -rdynamic since it breaks causes musl static linking.
+if (POLICY CMP0065)
+  cmake_policy(SET CMP0065 NEW)
+endif ()
+
+project (pavr2)
 
 set(POLOLU_BUILD FALSE CACHE BOOL
   "True if this software is being built by Pololu, and should use the Pololu logo.")
@@ -15,9 +31,6 @@ set (SOFTWARE_VERSION_MAJOR 1)
 set (SOFTWARE_VERSION_MINOR 1)
 set (SOFTWARE_VERSION_PATCH 0)
 set (SOFTWARE_VERSION ${SOFTWARE_VERSION_MAJOR}.${SOFTWARE_VERSION_MINOR}.${SOFTWARE_VERSION_PATCH})
-
-# Don't use -rdynamic since it causes musl static linking to not work.
-cmake_policy(SET CMP0065 NEW)
 
 string(TIMESTAMP YEAR "%Y")
 
@@ -64,15 +77,11 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set (LINUX 1)
 endif ()
 
-# Fix a warning on Mac OS X.
-if (NOT CMAKE_VERSION VERSION_LESS "3.0")
-  cmake_policy(SET CMP0042 NEW)
-endif ()
-
 # Find libusbp and use it.
 pkg_check_modules(LIBUSBP REQUIRED libusbp-1)
 string (REPLACE ";" " " LIBUSBP_CFLAGS "${LIBUSBP_CFLAGS}")
-set (CMAKE_CXX_FLAGS "${LIBUSBP_CFLAGS} ${CMAKE_CXX_FLAGS}")
+string (REPLACE ";" " " LIBUSBP_LDFLAGS "${LIBUSBP_LDFLAGS}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${LIBUSBP_CFLAGS}")
 
 include_directories (
   "${CMAKE_SOURCE_DIR}/include"
