@@ -12,6 +12,7 @@
 #include <QCloseEvent>
 #include <QComboBox>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
@@ -19,6 +20,7 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QProcessEnvironment>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QStatusBar>
@@ -382,12 +384,43 @@ void MainWindow::setVoltageSetting(QSpinBox * box, uint32_t mv)
     suppressEvents = false;
 }
 
+void MainWindow::centerAtStartupIfNeeded()
+{
+  // Center the window.  This fixes a strange bug on the Raspbian Jessie that we
+  // saw while developing the Tic software where the window would appear in the
+  // upper left with its title bar off the screen.  On other platforms, the
+  // default window position did not make much sense, so it is nice to center
+  // it.
+  //
+  // In case this causes problems, you can set the PAVR2GUI_CENTER environment
+  // variable to "N".
+  //
+  // NOTE: This position issue on Raspbian is a bug in Qt that should be fixed.
+  // Another workaround for it was to uncomment the lines in retranslate() that
+  // set up errors_stopping_header_label, error_rows[*].name_label, and
+  // manual_target_velocity_mode_radio, but then the Window would strangely
+  // start in the lower right.
+  auto env = QProcessEnvironment::systemEnvironment();
+  if (env.value("PAVR2GUI_CENTER") != "N")
+  {
+    setGeometry(
+      QStyle::alignedRect(
+        Qt::LeftToRight,
+        Qt::AlignCenter,
+        size(),
+        qApp->desktop()->availableGeometry()
+        )
+      );
+  }
+}
+
 void MainWindow::showEvent(QShowEvent * event)
 {
     Q_UNUSED(event);
     if (!startEventReported)
     {
         startEventReported = true;
+        centerAtStartupIfNeeded();
         view->userInputReceiver()->start();
     }
 }

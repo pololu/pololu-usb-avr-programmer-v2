@@ -37,6 +37,7 @@ Linux users can download the source code and compile it.  See
 * 1.1.0 (2018-04-01):
     * Added support for the Pololu USB AVR Programmer v2.1
     * Changed the installers to be built with nixcrpkgs.
+    * GUI: Center the window at startup.
 * 1.0.2 (2016-05-05): Fixed a problem with the Mac OS X release that prevented
   it from finding libusbp at run-time.
 * 1.0.1 (2016-03-20):
