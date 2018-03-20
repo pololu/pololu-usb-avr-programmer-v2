@@ -31,6 +31,13 @@
 #ifdef _WIN32
 Q_IMPORT_PLUGIN (QWindowsIntegrationPlugin);
 #endif
+#ifdef __linux__
+Q_IMPORT_PLUGIN (QXcbIntegrationPlugin);
+Q_IMPORT_PLUGIN (QLinuxFbIntegrationPlugin);
+#endif
+#ifdef __APPLE__
+Q_IMPORT_PLUGIN (QCocoaIntegrationPlugin);
+#endif
 #endif
 
 MainWindow::MainWindow(QWidget *parent)
