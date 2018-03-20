@@ -15,13 +15,22 @@ if (POLICY CMP0065)
   cmake_policy(SET CMP0065 NEW)
 endif ()
 
-project (pavr2)
+# Fix a warning in later versions of CMake.
+if (POLICY CMP0071)
+  cmake_policy(SET CMP0071 OLD)
+endif ()
 
-set(POLOLU_BUILD FALSE CACHE BOOL
-  "True if this software is being built by Pololu, and should use the Pololu logo.")
+project (pavr2)
 
 set(ENABLE_GUI TRUE CACHE BOOL
   "True if you want to build the GUI, which depends on Qt 5.")
+
+if (EXISTS "${CMAKE_SOURCE_DIR}/images/app.icns")
+  set (POLOLU_BUILD TRUE)
+endif ()
+if (EXISTS "${CMAKE_SOURCE_DIR}/images/app.ico")
+  set (POLOLU_BUILD TRUE)
+endif ()
 
 set (CLI_NAME "pavr2cmd")
 set (GUI_NAME "pavr2gui")
