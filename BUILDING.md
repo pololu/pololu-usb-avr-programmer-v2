@@ -1,16 +1,64 @@
 # Building from source
 
 If you want to build this software from its source code, you can follow these
-instructions.  However, for most Windows and Mac OS X users, we recommend
-installing this software using our pre-built installers and not trying to build
-from source.
+instructions.
 
 
-## Building from source on Linux
+## Building from source on Linux with nixcrpkgs
 
-You will need to install tar, wget, gcc, make, CMake, libudev, and Qt 5.  Most
-Linux distributions come with a package manager that you can use to install
-these dependencies.
+This software can be cross-compiled on a Linux machine using
+[nixcrpkgs](https://github.com/pololu/nixcrpkgs), a collection of tools for
+cross-compiling.  This is how we build our official installers.
+
+To get started, you should first install [Nix, the purely functional
+package manager](http://nixos.org/nix/), on a Linux machine by following the
+instructions on the Nix website.
+
+Next, run the comamnds below to download the latest version of
+[nixcrpkgs](https://github.com/pololu/nixcrpkgs), a collection of tools for
+cross-compiling, and add nixcrpkgs to your `NIX_PATH` environment variable.  You
+will need to have [git](https://git-scm.com/) installed.  (If you don't want to
+install git, you can download nixcrpkgs as a ZIP file from GitHub instead.)
+
+    git clone https://github.com/pololu/nixcrpkgs
+    export NIX_PATH=$NIX_PATH:nixcrpkgs=$(pwd)/nixcrpkgs
+
+Now run these commands to download this software and build it:
+
+    git clone https://github.com/pololu/pololu-usb-avr-programmer-v2 pavr2
+    cd pavr2
+    nix-build -A linux-x86
+
+The name `linux-x86` in the command above is the name of an attribute in the set
+defined in `default.nix`, which specifies that we want to build the software
+for a Linux machine running on an i686 processor.  You can specify `win32`
+instead to get a version for Windows, and you can look in `default.nix` to see
+the names of other supported platforms.
+
+Note: Building for macOS requires you to get a tarball of the macOS SDK
+and put it in the right place in nixcrpkgs.  See the `README.md` file in
+nixcrpkgs for details.
+
+The first time you build the software with this method, because it involves
+building a GCC cross-compiler and Qt from source, it will take a lot of time,
+memory, and disk space.  Subsequent builds will usually be faster because the
+the compiled Qt and GCC versions can be reused if you have not changed the
+recipes for building them.
+
+Once the build is completed, there should be a symbolic link in the current
+directory named `result` that points to the compiled software.
+
+
+## Building from source on Linux (for Linux)
+
+Another way to build for Linux is to use the development tools provided by your
+Linux distribution.  Note that if you use this method, the executables you build
+will most likely depend on a plethora of shared libraries from your Linux
+distribution.
+
+You will need to install git, gcc, make, CMake, libudev,
+and Qt 5.  Most Linux distributions come with a package manager that you can use
+to install these dependencies.
 
 On Ubuntu, Raspbian, and other Debian-based distributions, you can install the
 dependencies by running:
@@ -82,11 +130,14 @@ run:
 
 ## Building from source on Windows with MSYS2
 
-The recommended way to install this software on Windows is to download our
-pre-built installer.  However, you can build it from source using
-[MSYS2](http://msys2.github.io/).  If you have not done so already, follow the
-instructions on the MSYS2 website to download, install, and update your MSYS2
-environment.  In particular, be sure to update your installed packages.
+Another way to build this software for Windows is to use
+[MSYS2](http://msys2.github.io/).  Note that if you use this method, the
+executables you build will depend on a plethora of DLLs from the MSYS2
+environment.
+
+If you have not done so already, follow the instructions on the MSYS2 website to
+download, install, and update your MSYS2 environment.  In particular, be sure to
+update your installed packages.
 
 Next, start a shell by selecting "MinGW-w64 Win32 Shell" from your Start menu or
 by running `mingw32.exe`.  This is the right environment to use if you want to
@@ -96,7 +147,7 @@ build 64-bit software that only works on 64-bit versions of Windows, select
 
 Run this command to install the required development tools:
 
-    pacman -S base-devel git $MINGW_PACKAGE_PREFIX-{toolchain,cmake,tinyxml2,qt5}
+    pacman -S base-devel git $MINGW_PACKAGE_PREFIX-{toolchain,cmake,qt5}
 
 If pacman prompts you to enter a selection of packages to install, just press
 enter to install all of the packages.
@@ -137,14 +188,11 @@ by running `pavr2gui`.
 
 ## Building from source on Mac OS X with Homebrew
 
-The recommended way to install this software on Mac OS X is to download our
-pre-built installer.  However, you can also build it from source.
-
 First, install [Homebrew](http://brew.sh/).
 
 Then use brew to install the dependencies:
 
-    brew install pkg-config cmake tinyxml2 qt5
+    brew install pkg-config cmake qt5
 
 This software depends on the Pololu USB Library version 1.x.x (libusbp-1).  Run
 the commands below to download, compile, and install the latest version of that
@@ -180,41 +228,3 @@ Run these commands to build this software and install it:
 You should now be able to run the command-line utility by running `pavr2cmd` in
 your shell, and you should be able to start the graphical configuration utility
 by running `pavr2gui`.
-
-
-## Building from source on Linux for Windows with Nixcrpkgs
-
-The Windows version of this software can also be cross-compiled on a Linux
-machine using [Nixcrpkgs](https://github.com/pololu/nixcrpkgs), a collection of tools for
-cross-compiling.  One advantage of compiling the software this way is that you get standalone executables that do not depend on any shared libraries except those that come with the operating system.
-
-To get started, you should first install [Nix, the purely functional
-package manager](http://nixos.org/nix/), on a Linux machine by following the
-instructions on the Nix website.
-
-Next, download the latest version of
-[Nixcrpkgs](https://github.com/pololu/nixcrpkgs), a collection of tools for
-cross-compiling, and add nixcrpkgs to your `NIX_PATH` environment variable.  In
-these instructions, we will download it to your home directory, but you could
-put it somewhere else if you want.
-
-    cd ~
-    wget https://github.com/pololu/nixcrpkgs/archive/master.tar.gz
-    tar -xf master.tar.gz
-    mv nixcrpkgs-master nixcrpkgs
-    export NIX_PATH=$NIX_PATH:nixcrpkgs=$(pwd)/nixcrpkgs
-
-Now run these commands to download this software and build it:
-
-    wget https://github.com/pololu/pololu-usb-avr-programmer-v2/archive/master.tar.gz
-    tar -xzf master.tar.gz
-    cd pololu-usb-avr-programmer-v2-master
-    nix-build -A win32
-
-At this point, `nix-build` will start running the build procedure defined in
-`default.nix`.  The first time you run this command, it will take a while to
-complete because `nix-build` has to build the cross-compilers and libraries
-defined in Nixcrpkgs that are needed for this software.
-
-Once the build is completed, there should be a symbolic link in the current
-directory named `result` that points to the compiled software.
