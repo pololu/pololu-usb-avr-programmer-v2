@@ -110,11 +110,3 @@ add_subdirectory (cli)
 if (ENABLE_GUI)
   add_subdirectory (gui)
 endif ()
-
-if (WIN32)
-  add_subdirectory (windows-installer)
-endif ()
-
-if (APPLE)
-  add_subdirectory (mac-installer)
-endif ()
