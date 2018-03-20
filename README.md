@@ -1,7 +1,7 @@
 # Pololu USB AVR Programmer v2 software
 
-Version: 1.0.2<br/>
-Release date: 2016 May 05<br/>
+Version: 1.1.0<br/>
+Release date: 2018-04-01<br/>
 [www.pololu.com](https://www.pololu.com/)
 
 This repository contains the source code of the configuration software that
@@ -34,11 +34,14 @@ Linux users can download the source code and compile it.  See
 
 ## Version history
 
-* 1.0.2 (2016 May 05): Fixed a problem with the Mac OS X release that prevented
+* 1.1.0 (2018-04-01):
+    * Added support for the Pololu USB AVR Programmer v2.1
+    * Changed the installers to be built with nixcrpkgs.
+* 1.0.2 (2016-05-05): Fixed a problem with the Mac OS X release that prevented
   it from finding libusbp at run-time.
-* 1.0.1 (2016 Mar 20):
+* 1.0.1 (2016-03-20):
     * Fixed the Windows installer so that it sends the appropriate message to
       notify other applications that the PATH has changed.
     * Changed the Windows installer "repair" option so that it reinstalls
       the driver files when it is run.
-* 1.0.0 (2016 Mar 02): Original release.
+* 1.0.0 (2016-03-02): Original release.
