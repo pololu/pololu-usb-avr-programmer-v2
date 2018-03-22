@@ -1,7 +1,7 @@
 # Pololu USB AVR Programmer v2 software
 
 Version: 1.1.0<br/>
-Release date: 2018-04-01<br/>
+Release date: 2018-03-23<br/>
 [www.pololu.com](https://www.pololu.com/)
 
 This repository contains the source code of the configuration software that
@@ -34,7 +34,7 @@ Linux users can download the source code and compile it.  See
 
 ## Version history
 
-* 1.1.0 (2018-04-01):
+* 1.1.0 (2018-03-23):
     * Added support for the Pololu USB AVR Programmer v2.1
     * Changed the installers to be built with nixcrpkgs.
     * GUI: Center the window at startup.
