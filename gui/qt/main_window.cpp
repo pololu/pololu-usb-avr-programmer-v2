@@ -5,13 +5,14 @@
 #include "frequency_validator.h"
 
 #include "pavrpgm_config.h"
-#include "pgm04a_native_usb_protocol.h"
+#include "pavr2_protocol.h"
 
 #include <QApplication>
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QComboBox>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
@@ -19,6 +20,7 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QProcessEnvironment>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QStatusBar>
@@ -33,6 +35,7 @@ Q_IMPORT_PLUGIN (QWindowsIntegrationPlugin);
 #endif
 #ifdef __linux__
 Q_IMPORT_PLUGIN (QXcbIntegrationPlugin);
+Q_IMPORT_PLUGIN (QLinuxFbIntegrationPlugin);
 #endif
 #ifdef __APPLE__
 Q_IMPORT_PLUGIN (QCocoaIntegrationPlugin);
@@ -381,12 +384,43 @@ void MainWindow::setVoltageSetting(QSpinBox * box, uint32_t mv)
     suppressEvents = false;
 }
 
+void MainWindow::centerAtStartupIfNeeded()
+{
+  // Center the window.  This fixes a strange bug on the Raspbian Jessie that we
+  // saw while developing the Tic software where the window would appear in the
+  // upper left with its title bar off the screen.  On other platforms, the
+  // default window position did not make much sense, so it is nice to center
+  // it.
+  //
+  // In case this causes problems, you can set the PAVR2GUI_CENTER environment
+  // variable to "N".
+  //
+  // NOTE: This position issue on Raspbian is a bug in Qt that should be fixed.
+  // Another workaround for it was to uncomment the lines in retranslate() that
+  // set up errors_stopping_header_label, error_rows[*].name_label, and
+  // manual_target_velocity_mode_radio, but then the Window would strangely
+  // start in the lower right.
+  auto env = QProcessEnvironment::systemEnvironment();
+  if (env.value("PAVR2GUI_CENTER") != "N")
+  {
+    setGeometry(
+      QStyle::alignedRect(
+        Qt::LeftToRight,
+        Qt::AlignCenter,
+        size(),
+        qApp->desktop()->availableGeometry()
+        )
+      );
+  }
+}
+
 void MainWindow::showEvent(QShowEvent * event)
 {
     Q_UNUSED(event);
     if (!startEventReported)
     {
         startEventReported = true;
+        centerAtStartupIfNeeded();
         view->userInputReceiver()->start();
     }
 }
@@ -611,9 +645,9 @@ static void setupVoltageInput(QGridLayout * layout, int row,
     QLabel ** label, QSpinBox ** value)
 {
     VoltageSpinBox * newValue = new VoltageSpinBox();
-    newValue->setRange(0, PGM04A_VOLTAGE_UNITS * 255);
+    newValue->setRange(0, PAVR2_VOLTAGE_UNITS * 255);
     newValue->setSuffix(" mV");
-    newValue->setSingleStep(PGM04A_VOLTAGE_UNITS);
+    newValue->setSingleStep(PAVR2_VOLTAGE_UNITS);
 
     QLabel * newLabel = new QLabel();
     newLabel->setBuddy(newValue);
@@ -772,12 +806,12 @@ QWidget * MainWindow::setupDeviceInfoBox()
         &ttlPortLabel, &ttlPortValue);
 
     // Make the right column wide enough to display the name of the programmer,
-    // which should be the wides thing that needs to fit in that column.
+    // which should be the widest thing that needs to fit in that column.
     // This is important for making sure that the sizeHint of the overall main
     // window has a good width before we set the window to be a fixed size.
     {
         QLabel tmpLabel;
-        tmpLabel.setText("Pololu USB AVR Programmer v99");
+        tmpLabel.setText("Pololu USB AVR Programmer v99.9");
         layout->setColumnMinimumWidth(1, tmpLabel.sizeHint().width());
     }
 
@@ -906,9 +940,9 @@ QWidget * MainWindow::setupSettingsBox()
     {
         regulatorModeValue = new QComboBox();
         regulatorModeValue->setObjectName("regulatorModeValue");
-        regulatorModeValue->addItem("Auto", PGM04A_REGULATOR_MODE_AUTO);
-        regulatorModeValue->addItem("5 V", PGM04A_REGULATOR_MODE_5V);
-        regulatorModeValue->addItem("3.3 V", PGM04A_REGULATOR_MODE_3V3);
+        regulatorModeValue->addItem("Auto", PAVR2_REGULATOR_MODE_AUTO);
+        regulatorModeValue->addItem("5 V", PAVR2_REGULATOR_MODE_5V);
+        regulatorModeValue->addItem("3.3 V", PAVR2_REGULATOR_MODE_3V3);
         regulatorModeLabel = new QLabel();
         regulatorModeLabel->setBuddy(regulatorModeValue);
         layout->addWidget(regulatorModeLabel, row, 0, FIELD_LABEL_ALIGNMENT);
@@ -931,8 +965,8 @@ QWidget * MainWindow::setupSettingsBox()
     {
         vccOutputIndicatorValue = new QComboBox();
         vccOutputIndicatorValue->setObjectName("vccOutputIndicatorValue");
-        vccOutputIndicatorValue->addItem("Blinking", PGM04A_VCC_OUTPUT_INDICATOR_BLINKING);
-        vccOutputIndicatorValue->addItem("Steady", PGM04A_VCC_OUTPUT_INDICATOR_STEADY);
+        vccOutputIndicatorValue->addItem("Blinking", PAVR2_VCC_OUTPUT_INDICATOR_BLINKING);
+        vccOutputIndicatorValue->addItem("Steady", PAVR2_VCC_OUTPUT_INDICATOR_STEADY);
         vccOutputIndicatorLabel = new QLabel();
         vccOutputIndicatorLabel->setObjectName("vccOutputIndicatorLabel");
         layout->addWidget(vccOutputIndicatorLabel, row, 0, FIELD_LABEL_ALIGNMENT);
@@ -943,12 +977,12 @@ QWidget * MainWindow::setupSettingsBox()
     {
         lineAFunctionValue = new QComboBox();
         lineAFunctionValue->setObjectName("lineAFunctionValue");
-        lineAFunctionValue->addItem("(none)", PGM04A_LINE_IS_NOTHING);
-        lineAFunctionValue->addItem("CD (input)", PGM04A_LINE_IS_CD);
-        lineAFunctionValue->addItem("DSR (input)", PGM04A_LINE_IS_DSR);
-        lineAFunctionValue->addItem("DTR (output)", PGM04A_LINE_IS_DTR);
-        lineAFunctionValue->addItem("RTS (output)", PGM04A_LINE_IS_RTS);
-        lineAFunctionValue->addItem("DTR reset (output)", PGM04A_LINE_IS_DTR_RESET);
+        lineAFunctionValue->addItem("(none)", PAVR2_LINE_IS_NOTHING);
+        lineAFunctionValue->addItem("CD (input)", PAVR2_LINE_IS_CD);
+        lineAFunctionValue->addItem("DSR (input)", PAVR2_LINE_IS_DSR);
+        lineAFunctionValue->addItem("DTR (output)", PAVR2_LINE_IS_DTR);
+        lineAFunctionValue->addItem("RTS (output)", PAVR2_LINE_IS_RTS);
+        lineAFunctionValue->addItem("DTR reset (output)", PAVR2_LINE_IS_DTR_RESET);
         lineAFunctionLabel = new QLabel();
         lineAFunctionLabel->setBuddy(lineAFunctionValue);
         layout->addWidget(lineAFunctionLabel, row, 0, FIELD_LABEL_ALIGNMENT);
@@ -959,13 +993,13 @@ QWidget * MainWindow::setupSettingsBox()
     {
         lineBFunctionValue = new QComboBox();
         lineBFunctionValue->setObjectName("lineBFunctionValue");
-        lineBFunctionValue->addItem("(none)", PGM04A_LINE_IS_NOTHING);
-        lineBFunctionValue->addItem("CD (input)", PGM04A_LINE_IS_CD);
-        lineBFunctionValue->addItem("DSR (input)", PGM04A_LINE_IS_DSR);
-        lineBFunctionValue->addItem("DTR (output)", PGM04A_LINE_IS_DTR);
-        lineBFunctionValue->addItem("RTS (output)", PGM04A_LINE_IS_RTS);
-        lineBFunctionValue->addItem("Clock (output)", PGM04A_LINE_IS_CLOCK);
-        lineBFunctionValue->addItem("DTR reset (output)", PGM04A_LINE_IS_DTR_RESET);
+        lineBFunctionValue->addItem("(none)", PAVR2_LINE_IS_NOTHING);
+        lineBFunctionValue->addItem("CD (input)", PAVR2_LINE_IS_CD);
+        lineBFunctionValue->addItem("DSR (input)", PAVR2_LINE_IS_DSR);
+        lineBFunctionValue->addItem("DTR (output)", PAVR2_LINE_IS_DTR);
+        lineBFunctionValue->addItem("RTS (output)", PAVR2_LINE_IS_RTS);
+        lineBFunctionValue->addItem("Clock (output)", PAVR2_LINE_IS_CLOCK);
+        lineBFunctionValue->addItem("DTR reset (output)", PAVR2_LINE_IS_DTR_RESET);
         lineBFunctionLabel = new QLabel();
         lineBFunctionLabel->setBuddy(lineBFunctionValue);
         layout->addWidget(lineBFunctionLabel, row, 0, FIELD_LABEL_ALIGNMENT);
@@ -1028,9 +1062,6 @@ QWidget * MainWindow::setupFooter()
 
     int col = 0;
     layout->addWidget(setupConnectionStatus(), 0, col++, Qt::AlignLeft);
-    // TODO: remove code for defaultsButton and cancelChangesButton
-    //layout->addWidget(setupDefaultsButton(), 0, col++, Qt::AlignRight);
-    //layout->addWidget(setupCancelChangesButton(), 0, col++, Qt::AlignRight);
     layout->addWidget(setupApplyButton(), 0, col++, Qt::AlignRight);
 
     layout->setColumnStretch(0, 1);
@@ -1043,20 +1074,6 @@ QWidget * MainWindow::setupConnectionStatus()
 {
     connectionStatusValue = new QLabel();
     return connectionStatusValue;
-}
-
-QWidget * MainWindow::setupCancelChangesButton()
-{
-    cancelChangesButton = new QPushButton();
-    cancelChangesButton->setObjectName("cancelChangesButton");
-    return cancelChangesButton;
-}
-
-QWidget * MainWindow::setupDefaultsButton()
-{
-    defaultsButton = new QPushButton();
-    defaultsButton->setObjectName("defaultsButton");
-    return defaultsButton;
 }
 
 QWidget * MainWindow::setupApplyButton()
@@ -1121,7 +1138,5 @@ void MainWindow::retranslate()
     stk500HardwareVersionLabel->setText(tr("STK500 hardware version") + FIELD_LABEL_SUFFIX);
     stk500SoftwareVersionLabel->setText(tr("STK500 software version") + FIELD_LABEL_SUFFIX);
 
-    //cancelChangesButton->setText("Cancel Changes"); // TODO: use same name as menu item
-    //defaultsButton->setText("Defaults"); // TODO: use same name as menu item
     applySettingsButton->setText(applySettingsAction->text());
 }

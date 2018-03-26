@@ -1,29 +1,30 @@
-; Copyright (C) 2015 Pololu Corporation
+; Copyright (C) 2018 Pololu Corporation
 
 ; This driver file is not needed on Windows 8.1 and later because each device
 ; implements Microsoft OS 2.0 Descriptors.
-
 [Strings]
-DriverPackageDisplayName="Pololu USB AVR Programmer v2"
+DriverPackageDisplayName="Pololu USB AVR Programmer v2 Drivers"
 ManufacturerName="Pololu Corporation"
 ClassName="Universal Serial Bus devices"
 DeviceInterfaceGUID="{7bcb89b1-f483-4852-87c3-9848c3c05be5}"
 p00B0="Pololu USB AVR Programmer v2"
+p00BB="Pololu USB AVR Programmer v2.1"
 
 [DefaultInstall]
-CopyINF=pgm04a.inf
+CopyINF=pavr2.inf
 
 [Version]
-DriverVer=12/23/2015,1.0.1
+DriverVer=01/23/2018,1.0.0
 Signature=$Windows NT$
 Class=USBDevice
 ClassGuid={88BAE032-5A81-49F0-BC3D-A4FF138216D6}
 Provider=%ManufacturerName%
 CatalogFile=pololu.cat
 DriverPackageDisplayName=%DriverPackageDisplayName%
+PnpLockdown=1
 
 [Manufacturer]
-%ManufacturerName%=Models,NTamd64
+%ManufacturerName%=Models,NTx86,NTamd64,NTarm
 
 [ClassInstall32]
 AddReg=ClassInstall_AddReg
@@ -35,22 +36,28 @@ HKR,,NoInstallClass,,1
 HKR,,BootCritical,,0
 HKR,,Configurable,,1
 
-[Models]
-%p00B0%=USB_Install, USB\VID_1FFB&PID_00B0&MI_00
+[Models.NTx86]
+%p00B0%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_00
+%p00BB%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_00
 
 [Models.NTamd64]
-%p00B0%=USB_Install, USB\VID_1FFB&PID_00B0&MI_00
+%p00B0%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_00
+%p00BB%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_00
 
-[USB_Install]
-Include = Winusb.inf
-Needs = WINUSB.NT
+[Models.NTarm]
+%p00B0%=DriverInstall, USB\VID_1FFB&PID_00B0&MI_00
+%p00BB%=DriverInstall, USB\VID_1FFB&PID_00BB&MI_00
 
-[USB_Install.Services]
-Include = Winusb.inf
-Needs = WINUSB.NT.Services
+[DriverInstall]
+Include=Winusb.inf
+Needs=WINUSB.NT
 
-[USB_Install.HW]
-AddReg = Dev_AddReg
+[DriverInstall.Services]
+Include=Winusb.inf
+Needs=WINUSB.NT.Services
+
+[DriverInstall.HW]
+AddReg=Dev_AddReg
 
 [Dev_AddReg]
-HKR,,DeviceInterfaceGUIDs,0x00010000,%DeviceInterfaceGUID%
+HKR,,DeviceInterfaceGUIDs,0x10000,%DeviceInterfaceGUID%

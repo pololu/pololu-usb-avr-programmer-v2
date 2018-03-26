@@ -109,6 +109,8 @@ private:
 
     void setVoltageSetting(QSpinBox * box, uint32_t mv);
 
+    void centerAtStartupIfNeeded();
+
 protected:
     /** This is called by Qt just before the window is shown for the first time,
      * and is also called whenever the window becomes unminimized. */
@@ -189,8 +191,6 @@ private:
     QWidget * setupSettingsBox();
     QWidget * setupFooter();
     QWidget * setupConnectionStatus();
-    QWidget * setupCancelChangesButton();
-    QWidget * setupDefaultsButton();
     QWidget * setupApplyButton();
     void retranslate();
 

@@ -16,13 +16,13 @@
 #include <string>
 #include <cstdint>
 
-#include "pgm04a_native_usb_protocol.h"
+#include "pavr2_protocol.h"
 #include "programmer_frequency_tables.h"
 
 /** The maximum firmware major version supported by this program.  If we make a
  * breaking change in the firmware, we can use this to be sure that old software
  * will not try to talk to new firmware and mess something up. */
-#define PGM04A_FIRMWARE_VERSION_MAJOR_MAX 1
+#define PAVR2_FIRMWARE_VERSION_MAJOR_MAX 1
 
 struct ProgrammerSettings;
 struct ProgrammerVariables;
@@ -71,10 +71,10 @@ class ProgrammerInstance
 public:
     ProgrammerInstance();
     explicit ProgrammerInstance(
-        libusbp::device, libusbp::generic_interface,
+        libusbp::device, libusbp::generic_interface, uint16_t product_id,
         std::string serialNumber, uint16_t firmwareVersion);
 
-    static std::string getName();
+    std::string getName() const;
 
     // An operating system-specific identifier for this device.
     std::string getOsId() const;
@@ -107,6 +107,7 @@ public:
     libusbp::generic_interface usbInterface;
 
 private:
+    uint16_t productId;
     std::string serialNumber;
     uint16_t firmwareVersion;
 };

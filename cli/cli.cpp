@@ -10,7 +10,7 @@
 #include "arg_reader.h"
 #include "exit_codes.h"
 #include "exception_with_exit_code.h"
-#include "pgm04a_native_usb_protocol.h"
+#include "pavr2_protocol.h"
 
 // [all-settings]
 static const char help[] =
@@ -313,31 +313,31 @@ void parseArgLineFunction(ArgReader & argReader, uint8_t & out)
 
     if (value == "none" || value == "NONE")
     {
-        out = PGM04A_LINE_IS_NOTHING;
+        out = PAVR2_LINE_IS_NOTHING;
     }
     else if (value == "cd" || value == "CD")
     {
-        out = PGM04A_LINE_IS_CD;
+        out = PAVR2_LINE_IS_CD;
     }
     else if (value == "dsr" || value == "DSR")
     {
-        out = PGM04A_LINE_IS_DSR;
+        out = PAVR2_LINE_IS_DSR;
     }
     else if (value == "dtr" || value == "DTR")
     {
-        out = PGM04A_LINE_IS_DTR;
+        out = PAVR2_LINE_IS_DTR;
     }
     else if (value == "rts" || value == "RTS")
     {
-        out = PGM04A_LINE_IS_RTS;
+        out = PAVR2_LINE_IS_RTS;
     }
     else if (value == "clock" || value == "CLOCK")
     {
-        out = PGM04A_LINE_IS_CLOCK;
+        out = PAVR2_LINE_IS_CLOCK;
     }
     else if (value == "dtr-reset" || value == "DTR-RESET" || value == "DTR-reset")
     {
-        out = PGM04A_LINE_IS_DTR_RESET;
+        out = PAVR2_LINE_IS_DTR_RESET;
     }
     else
     {
@@ -385,17 +385,17 @@ static void parseArgRegulatorMode(ArgReader & argReader, Arguments & args)
 
     if (value == "auto")
     {
-        args.regulatorMode = PGM04A_REGULATOR_MODE_AUTO;
+        args.regulatorMode = PAVR2_REGULATOR_MODE_AUTO;
         args.regulatorModeSpecified = true;
     }
     else if (value == "5v" || value == "5V")
     {
-        args.regulatorMode = PGM04A_REGULATOR_MODE_5V;
+        args.regulatorMode = PAVR2_REGULATOR_MODE_5V;
         args.regulatorModeSpecified = true;
     }
     else if (value == "3v3" || value == "3V3")
     {
-        args.regulatorMode = PGM04A_REGULATOR_MODE_3V3;
+        args.regulatorMode = PAVR2_REGULATOR_MODE_3V3;
         args.regulatorModeSpecified = true;
     }
     else
@@ -436,12 +436,12 @@ static void parseArgVccOutputIndicator(ArgReader & argReader, Arguments & args)
 
     if (value == "blinking" || value == "Blinking")
     {
-        args.vccOutputIndicator = PGM04A_VCC_OUTPUT_INDICATOR_BLINKING;
+        args.vccOutputIndicator = PAVR2_VCC_OUTPUT_INDICATOR_BLINKING;
         args.vccOutputIndicatorSpecified = true;
     }
     else if (value == "steady" || value == "Steady")
     {
-        args.vccOutputIndicator = PGM04A_VCC_OUTPUT_INDICATOR_STEADY;
+        args.vccOutputIndicator = PAVR2_VCC_OUTPUT_INDICATOR_STEADY;
         args.vccOutputIndicatorSpecified = true;
     }
     else

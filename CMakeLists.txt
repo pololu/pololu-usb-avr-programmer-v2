@@ -15,21 +15,30 @@ if (POLICY CMP0065)
   cmake_policy(SET CMP0065 NEW)
 endif ()
 
-project (pavrpgm)
+# Fix a warning in later versions of CMake.
+if (POLICY CMP0071)
+  cmake_policy(SET CMP0071 OLD)
+endif ()
 
-set(POLOLU_BUILD FALSE CACHE BOOL
-  "True if this software is being built by Pololu, and should use the Pololu logo.")
+project (pavr2)
 
 set(ENABLE_GUI TRUE CACHE BOOL
   "True if you want to build the GUI, which depends on Qt 5.")
+
+if (EXISTS "${CMAKE_SOURCE_DIR}/images/app.icns")
+  set (POLOLU_BUILD TRUE)
+endif ()
+if (EXISTS "${CMAKE_SOURCE_DIR}/images/app.ico")
+  set (POLOLU_BUILD TRUE)
+endif ()
 
 set (CLI_NAME "pavr2cmd")
 set (GUI_NAME "pavr2gui")
 set (DOCUMENTATION_URL "https://www.pololu.com/docs/0J67")
 
 set (SOFTWARE_VERSION_MAJOR 1)
-set (SOFTWARE_VERSION_MINOR 0)
-set (SOFTWARE_VERSION_PATCH 2)
+set (SOFTWARE_VERSION_MINOR 1)
+set (SOFTWARE_VERSION_PATCH 0)
 set (SOFTWARE_VERSION ${SOFTWARE_VERSION_MAJOR}.${SOFTWARE_VERSION_MINOR}.${SOFTWARE_VERSION_PATCH})
 
 string(TIMESTAMP YEAR "%Y")
@@ -81,7 +90,7 @@ endif ()
 pkg_check_modules(LIBUSBP REQUIRED libusbp-1)
 string (REPLACE ";" " " LIBUSBP_CFLAGS "${LIBUSBP_CFLAGS}")
 string (REPLACE ";" " " LIBUSBP_LDFLAGS "${LIBUSBP_LDFLAGS}")
-set (CMAKE_CXX_FLAGS "${LIBUSBP_CFLAGS} ${CMAKE_CXX_FLAGS}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${LIBUSBP_CFLAGS}")
 
 include_directories (
   "${CMAKE_SOURCE_DIR}/include"
@@ -100,12 +109,4 @@ add_subdirectory (cli)
 
 if (ENABLE_GUI)
   add_subdirectory (gui)
-endif ()
-
-if (WIN32)
-  add_subdirectory (windows-installer)
-endif ()
-
-if (APPLE)
-  add_subdirectory (mac-installer)
 endif ()

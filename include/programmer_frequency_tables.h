@@ -55,7 +55,7 @@ extern const std::vector<ProgrammerFrequency> programmerFullMaxFrequencyTable;
  *
  * This table could also be computed by selecting the elements from
  * programmerFullMaxFrequencyTable that have a period between
- * PGM04A_ISP_FASTEST_PERIOD_MIN and PGM04A_ISP_FASTEST_PERIOD_MAX. */
+ * PAVR2_ISP_FASTEST_PERIOD_MIN and PAVR2_ISP_FASTEST_PERIOD_MAX. */
 extern const std::vector<ProgrammerFrequency> programmerAllowedMaxFrequencyTable;
 
 /** This table holds a useful subset of programmerAllowedMaxFrequencyTable.
