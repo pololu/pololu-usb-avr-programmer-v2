@@ -24,13 +24,11 @@ software such as AVRDUDE or Atmel Studio.
 
 ## Installation
 
-Installers for Windows and Mac OS X are available for download from the Pololu
-USB AVR Programmer v2 User's Guide:
+Installers for this software are available for download from the
+[Pololu USB AVR Programmer v2 User's Guide][guide].
 
-  http://www.pololu.com/docs/0J67
-
-Linux users can download the source code and compile it.  See
-[BUILDING.md](BUILDING.md) for instructions.
+See [BUILDING.md](BUILDING.md) for information about how to compile
+the software from source.
 
 ## Version history
 
@@ -46,3 +44,5 @@ Linux users can download the source code and compile it.  See
     * Changed the Windows installer "repair" option so that it reinstalls
       the driver files when it is run.
 * 1.0.0 (2016-03-02): Original release.
+
+[guide]: http://www.pololu.com/docs/0J67
