@@ -1,6 +1,7 @@
 #include <cassert>
 #include <thread>
 #include <chrono>
+#include <stdexcept>
 
 #include <programmer.h>
 #include <pavrpgm_config.h>
@@ -318,7 +319,7 @@ static uint8_t bcdToDecimal(uint8_t bcd)
 
 std::string ProgrammerInstance::getFirmwareVersionString() const
 {
-    char buffer[6];
+    char buffer[8];
     snprintf(buffer, sizeof(buffer), "%d.%02d",
         getFirmwareVersionMajor(), getFirmwareVersionMinor());
     return std::string(buffer);
