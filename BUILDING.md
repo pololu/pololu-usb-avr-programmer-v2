@@ -228,3 +228,11 @@ Run these commands to build this software and install it:
 You should now be able to run the command-line utility by running `pavr2cmd` in
 your shell, and you should be able to start the graphical configuration utility
 by running `pavr2gui`.
+
+
+## Uninstalling
+
+In order to uninstall this library, open a terminal and navigate to the build folder
+within this source code project using `cd` and enter the following command:
+
+    sudo make uninstall
