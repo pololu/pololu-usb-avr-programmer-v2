@@ -619,7 +619,7 @@ void MainWindow::on_stk500SoftwareVersionMajorValue_valueChanged(int value)
     on_stk500HardwareVersionValue_valueChanged(0);
 }
 
-// On Mac OS X, field labels are usually right-aligned.
+// On macOS, field labels are usually right-aligned.
 #ifdef __APPLE__
 #define FIELD_LABEL_SUFFIX ":"
 #define FIELD_LABEL_ALIGNMENT Qt::AlignRight
@@ -883,7 +883,7 @@ QWidget * MainWindow::setupCurrentStatusBox()
 QWidget * MainWindow::setupSettingsWidget()
 {
 #ifdef __APPLE__
-    // There is something odd about Qt 5.5.1 on Mac OS X which makes the
+    // There is something odd about Qt 5.5.1 on macOS which makes the
     // QGridLayout add extra padding that we don't want (about 10px at the top
     // and about 1px at the bottom).  Since the QGridLayout only has one
     // element, we don't really need it, and we can use this simple workaround
