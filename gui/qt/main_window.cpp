@@ -7,7 +7,6 @@
 #include "pavrpgm_config.h"
 #include "pavr2_protocol.h"
 
-#include <QApplication>
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QComboBox>
@@ -15,6 +14,7 @@
 #include <QDesktopWidget>
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QGuiApplication>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMainWindow>
@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QProcessEnvironment>
 #include <QPushButton>
+#include <QScreen>
 #include <QSpinBox>
 #include <QStatusBar>
 #include <QTimer>
@@ -411,7 +412,7 @@ void MainWindow::centerAtStartupIfNeeded()
         Qt::LeftToRight,
         Qt::AlignCenter,
         size(),
-        qApp->desktop()->availableGeometry()
+        qApp->primaryScreen()->availableGeometry()
         )
       );
   }
