@@ -7,6 +7,7 @@
 #include "pavrpgm_config.h"
 #include "pavr2_protocol.h"
 
+#include <QApplication>
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QComboBox>
@@ -14,7 +15,6 @@
 #include <QDesktopWidget>
 #include <QGridLayout>
 #include <QGroupBox>
-#include <QGuiApplication>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMainWindow>
