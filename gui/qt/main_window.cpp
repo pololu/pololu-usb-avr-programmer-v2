@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QProcessEnvironment>
 #include <QPushButton>
+#include <QScreen>
 #include <QSpinBox>
 #include <QStatusBar>
 #include <QTimer>
@@ -411,7 +412,7 @@ void MainWindow::centerAtStartupIfNeeded()
         Qt::LeftToRight,
         Qt::AlignCenter,
         size(),
-        qApp->desktop()->availableGeometry()
+        qApp->primaryScreen()->availableGeometry()
         )
       );
   }
@@ -638,7 +639,7 @@ static void setupReadOnlyTextField(QGridLayout * layout, int row,
     newLabel->setBuddy(newValue);
 
     layout->addWidget(newLabel, row, 0, FIELD_LABEL_ALIGNMENT);
-    layout->addWidget(newValue, row, 1, 0);
+    layout->addWidget(newValue, row, 1, {});
 
     if (label) { *label = newLabel; }
     if (value) { *value = newValue; }
@@ -682,11 +683,11 @@ void MainWindow::setupWindow()
     QGridLayout * layout = centralWidgetLayout = new QGridLayout();
 
     int row = 0;
-    layout->addWidget(setupDeviceInfoBox(), row++, 0, 0);
-    layout->addWidget(setupProgrammingResultsBox(), row++, 0, 0);
-    layout->addWidget(setupCurrentStatusBox(), row++, 0, 0);
-    layout->addWidget(setupSettingsWidget(), 0, 1, row, 1, 0);
-    layout->addWidget(setupFooter(), row++, 0, 1, 2, 0);
+    layout->addWidget(setupDeviceInfoBox(), row++, {}, {});
+    layout->addWidget(setupProgrammingResultsBox(), row++, {}, {});
+    layout->addWidget(setupCurrentStatusBox(), row++, {}, {});
+    layout->addWidget(setupSettingsWidget(), {}, 1, row, 1, {});
+    layout->addWidget(setupFooter(), row++, {}, 1, 2, {});
 
     layout->setRowStretch(row, 1);
     centralWidget->setLayout(layout);
@@ -846,7 +847,7 @@ QWidget * MainWindow::setupProgrammingResultsBox()
         programmingErrorValue->sizeHint().height() * lineCount);
     programmingErrorValue->setAlignment(Qt::AlignTop);
     programmingErrorValue->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    layout->addWidget(programmingErrorValue, row++, 0, 1, 2, 0);
+    layout->addWidget(programmingErrorValue, row++, {}, 1, 2, {});
 
     layout->setRowStretch(row, 1);
     programmingResultsBox->setLayout(layout);
@@ -896,7 +897,7 @@ QWidget * MainWindow::setupSettingsWidget()
     layout->setContentsMargins(0, 0, 0, 0);
 
     int row = 0;
-    layout->addWidget(setupSettingsBox(), row++, 0, 0);
+    layout->addWidget(setupSettingsBox(), row++, {}, {});
 
     settingsWidget->setLayout(layout);
     return settingsWidget;
