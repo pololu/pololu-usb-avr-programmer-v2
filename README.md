@@ -32,6 +32,9 @@ the software from source.
 
 ## Version history
 
+* 1.1.1 (2024-12-23):
+    * No changes to this software, but having this new version number helps
+      us release an updated version that works on the Raspberry Pi 5.
 * 1.1.0 (2018-03-23):
     * Added support for the Pololu USB AVR Programmer v2.1
     * Changed the installers to be built with nixcrpkgs.
